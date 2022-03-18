@@ -30,27 +30,26 @@
         justify-content: center;
         align-items: center;
         font-family: Arial, Helvetica, sans-serif;
-    }
-    .welcome{
-        margin-top: 120px;
-        flex-direction: column;
-        .welcome-title{
-            color: blanchedalmond;
+        .welcome{
+            margin-top: 120px;
+            flex-direction: column;
+            .welcome-title{
+                color: blanchedalmond;
+            }
+            .welcome-subtitle{
+                width: 800px;
+                line-height: 1.6;
+                letter-spacing: 1.1px;
+                color: rgba(163, 159, 151, 0.863);
+                --animate-delay: 0.5s;
+            }
+            .travolta_and_google-img-wrapper{
+                margin-top: 70px;
+                --animate-delay: 0.5s;
+                .google-logo{
+                    width: 400px;
+                }
+            }
         }
-        .welcome-subtitle{
-            width: 800px;
-            line-height: 1.6;
-            letter-spacing: 1.1px;
-            color: rgba(163, 159, 151, 0.863);
-            --animate-delay: 0.5s;
-        }
-    }
-
-    .travolta_and_google-img-wrapper{
-        margin-top: 70px;
-        --animate-delay: 0.5s;
-    }
-    .google-logo{
-        width: 400px;
     }
 </style>
