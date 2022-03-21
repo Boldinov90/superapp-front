@@ -4,7 +4,6 @@ export default createStore({
     state: {
         superApp: {
             logInTrue: false,
-            name: '',
             id: '',
             name: '',
             email: '',
