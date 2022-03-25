@@ -114,139 +114,149 @@
             async setNewUser(){
                 this.loading = true
                 // Загружаем список пользователей с сервера
-                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
-                const arreyUsers = Object.keys(data).map(key => {
-                    return {
-                        id: key,
-                        ...data[key]
-                    }
-                })
+                // const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
+                const data = await axios.get('http://localhost:3000/users')
+                // const {data} = await axios.get('mongodb://localhost:27017/superapp/users.json')
+                console.log(data.data)
+                // const arreyUsers = Object.keys(data).map(key => {
+                //     return {
+                //         id: key,
+                //         ...data[key]
+                //     }
+                // })
+                // console.log(arreyUsers)
+
                 this.loading = false
 
-                // ================= Валидация EMAIL =====================
-                // Проверка введено ли что нибудь в поле email
-                if(this.email.length === 0){
-                    // Записываем ошибку
-                    this.errors.email = true
-                    // Выводим в лейбле сообщение об ошибке
-                    this.emailLabel = 'Поле не может быть пустым*'
-                }else{
-                    // Отменяем ошибку
-                    this.errors.email = null
-                    // Возвращаем лейбл в исходное состояние
-                    this.emailLabel = 'Логин*'
-                    // Проверка есть ли данный пользователь на сервере
-                    if(arreyUsers.find(user => user.email === this.email)){
-                        // Записываем ошибку
-                        this.errors.email = true
-                        // Выводим в лейбле сообщение об ошибке
-                        this.emailLabel = 'Пользователь с таким именем уже существует*'
-                        // Очищаем поле email
-                        // this.email = ''
-                    }
-                }
+                // // ================= Валидация EMAIL =====================
+                // // Проверка введено ли что нибудь в поле email
+                // if(this.email.length === 0){
+                //     // Записываем ошибку
+                //     this.errors.email = true
+                //     // Выводим в лейбле сообщение об ошибке
+                //     this.emailLabel = 'Поле не может быть пустым*'
+                // }else{
+                //     // Отменяем ошибку
+                //     this.errors.email = null
+                //     // Возвращаем лейбл в исходное состояние
+                //     this.emailLabel = 'Логин*'
+                //     // Проверка есть ли данный пользователь на сервере
+                //     if(arreyUsers.find(user => user.email === this.email)){
+                //         // Записываем ошибку
+                //         this.errors.email = true
+                //         // Выводим в лейбле сообщение об ошибке
+                //         this.emailLabel = 'Пользователь с таким именем уже существует*'
+                //         // Очищаем поле email
+                //         // this.email = ''
+                //     }
+                // }
 
-                // ================= Валидация NAME =====================
-                // Проверка введено ли что нибудь в поле name
-                if(this.name.length === 0){
-                    // Записываем ошибку
-                    this.errors.name = true
-                    // Выводим в лейбле сообщение об ошибке
-                    this.nameLabel = 'Поле не может быть пустым*'
-                }else{
-                    // Отменяем ошибку
-                    this.errors.name = null
-                    // Возвращаем лейбл в исходное состояние
-                    this.nameLabel = 'Имя*'
-                }
+                // // ================= Валидация NAME =====================
+                // // Проверка введено ли что нибудь в поле name
+                // if(this.name.length === 0){
+                //     // Записываем ошибку
+                //     this.errors.name = true
+                //     // Выводим в лейбле сообщение об ошибке
+                //     this.nameLabel = 'Поле не может быть пустым*'
+                // }else{
+                //     // Отменяем ошибку
+                //     this.errors.name = null
+                //     // Возвращаем лейбл в исходное состояние
+                //     this.nameLabel = 'Имя*'
+                // }
 
-                // ================= Валидация PASSWORD =====================
-                // Проверка введено ли что нибудь в поле password
-                if(this.password.length === 0){
-                    // Записываем ошибку
-                    this.errors.password = true
-                    // Выводим в лейбле сообщение об ошибке
-                    this.passwordLabel = 'Поле не может быть пустым*'
-                }else{
-                    // Отменяем ошибку
-                    this.errors.password = null
-                    // Возвращаем лейбл в исходное состояние
-                    this.passwordLabel = 'Пароль*'
-                }
+                // // ================= Валидация PASSWORD =====================
+                // // Проверка введено ли что нибудь в поле password
+                // if(this.password.length === 0){
+                //     // Записываем ошибку
+                //     this.errors.password = true
+                //     // Выводим в лейбле сообщение об ошибке
+                //     this.passwordLabel = 'Поле не может быть пустым*'
+                // }else{
+                //     // Отменяем ошибку
+                //     this.errors.password = null
+                //     // Возвращаем лейбл в исходное состояние
+                //     this.passwordLabel = 'Пароль*'
+                // }
 
-                // ================= Валидация PASSWORDCONFIRM =====================
-                // Проверка введено ли что нибудь в поле passwordConfirm
-                if(this.passwordСonfirm.length === 0){
-                    // Записываем ошибку
-                    this.errors.passwordСonfirm = true
-                    // Выводим в лейбле сообщение об ошибке
-                    this.passwordСonfirmLabel = 'Поле не может быть пустым*'
-                }else{
-                    // Проверка подтверждения пароля. Пароль должен совпадать
-                    if(this.password !== this.passwordСonfirm){
-                        // Записываем ошибку
-                        this.errors.passwordСonfirm = true
-                        // Выводим в лейбле сообщение об ошибке
-                        this.passwordСonfirmLabel = 'Пароли не совпадают'
-                    }
-                    else{
-                        // Отменяем ошибку
-                        this.errors.passwordСonfirm = null
-                        // Возвращаем лейбл в исходное состояние
-                        this.passwordСonfirmLabel = 'Пароли совпадают*'
-                    }
-                }
+                // // ================= Валидация PASSWORDCONFIRM =====================
+                // // Проверка введено ли что нибудь в поле passwordConfirm
+                // if(this.passwordСonfirm.length === 0){
+                //     // Записываем ошибку
+                //     this.errors.passwordСonfirm = true
+                //     // Выводим в лейбле сообщение об ошибке
+                //     this.passwordСonfirmLabel = 'Поле не может быть пустым*'
+                // }else{
+                //     // Проверка подтверждения пароля. Пароль должен совпадать
+                //     if(this.password !== this.passwordСonfirm){
+                //         // Записываем ошибку
+                //         this.errors.passwordСonfirm = true
+                //         // Выводим в лейбле сообщение об ошибке
+                //         this.passwordСonfirmLabel = 'Пароли не совпадают'
+                //     }
+                //     else{
+                //         // Отменяем ошибку
+                //         this.errors.passwordСonfirm = null
+                //         // Возвращаем лейбл в исходное состояние
+                //         this.passwordСonfirmLabel = 'Пароли совпадают*'
+                //     }
+                // }
         
-                // В случае валидности, отправляем данные из формы
-                if( this.errors.email === null && 
-                    this.errors.name === null && 
-                    this.errors.password === null && 
-                    this.errors.passwordСonfirm === null){
-                    this.loading = true
-                    const response = await axios.post('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json', {
-                        email: this.email,
-                        name: this.name,
-                        password: this.password
-                    })
-                    // Очищаем поля
-                    this.email = ''
-                    this.name = ''
-                    this.password = ''
-                    this.passwordConfirm = ''
-                    // Если ответ получен
-                    if(response){
-                        this.loading = false
-                        // Говорим приложению, что регистрация прошла успешна
-                        this.registrationDone = true
-                    }   
-                }
+                // // В случае валидности, отправляем данные из формы
+                // if( this.errors.email === null && 
+                //     this.errors.name === null && 
+                //     this.errors.password === null && 
+                //     this.errors.passwordСonfirm === null){
+                //     this.loading = true
+                //     // const response = await axios.post('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json', {
+                //     //     email: this.email,
+                //     //     name: this.name,
+                //     //     password: this.password
+                //     // })
+                //     const response = await axios.post('http://localhost:3000/users', {
+                //         email: this.email,
+                //         name: this.name,
+                //         password: this.password
+                //     })
+                //     // Очищаем поля
+                //     this.email = ''
+                //     this.name = ''
+                //     this.password = ''
+                //     this.passwordConfirm = ''
+                //     // Если ответ получен
+                //     if(response){
+                //         this.loading = false
+                //         // Говорим приложению, что регистрация прошла успешна
+                //         this.registrationDone = true
+                //     }   
+                // }
             }
         },
         watch:{
-            email(){
-                // Отменяем ошибку
-                this.errors.email = null
-                // Возвращаем лейбл в исходное состояние
-                this.emailLabel = 'Логин*'
-            },
-            name(){
-                // Отменяем ошибку
-                this.errors.name = null
-                // Возвращаем лейбл в исходное состояние
-                this.nameLabel = 'Имя*'
-            },
-            password(){
-                // Отменяем ошибку
-                this.errors.password = null
-                // Возвращаем лейбл в исходное состояние
-                this.passwordLabel = 'Пароль*'
-            },
-            passwordСonfirm(){
-                // Отменяем ошибку
-                this.errors.passwordСonfirm = null
-                // Возвращаем лейбл в исходное состояние
-                this.passwordСonfirmLabel = 'Подтверждение пароля*'
-            }
+            // email(){
+            //     // Отменяем ошибку
+            //     this.errors.email = null
+            //     // Возвращаем лейбл в исходное состояние
+            //     this.emailLabel = 'Логин*'
+            // },
+            // name(){
+            //     // Отменяем ошибку
+            //     this.errors.name = null
+            //     // Возвращаем лейбл в исходное состояние
+            //     this.nameLabel = 'Имя*'
+            // },
+            // password(){
+            //     // Отменяем ошибку
+            //     this.errors.password = null
+            //     // Возвращаем лейбл в исходное состояние
+            //     this.passwordLabel = 'Пароль*'
+            // },
+            // passwordСonfirm(){
+            //     // Отменяем ошибку
+            //     this.errors.passwordСonfirm = null
+            //     // Возвращаем лейбл в исходное состояние
+            //     this.passwordСonfirmLabel = 'Подтверждение пароля*'
+            // }
         }
     }
 </script>
