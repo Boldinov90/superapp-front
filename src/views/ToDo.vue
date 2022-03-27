@@ -115,20 +115,12 @@
             // Функция обновления DataBase
             async updateDataBase(){
                 // Запрос на сервер и получение массива с пользователями
-                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
-                const arreyUsers = Object.keys(data).map(key => {
-                    return {
-                        id: key,
-                        ...data[key]
-                    }
-                })
+                const arreyUsers = await axios.get('http://localhost:3000/users')
                 // Находим нужного пользователя по ID
-                const user = arreyUsers.find(user => user.id === this.$store.state.superApp.id).id
-                // Записываем/Обновляем наш список задач
-                data[user].toDo = this.$store.state.superApp.toDo
+                const user = arreyUsers.data.find(user => user._id === this.$store.state.superApp._id)
                 // Обновляем данные на сервере
-                await axios.put('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr.json', {
-                    users: data
+                await axios.put(`http://localhost:3000/users/${user._id}`, {
+                    toDo: this.$store.state.superApp.toDo
                 })
             },
 

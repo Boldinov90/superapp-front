@@ -51,15 +51,11 @@
         methods: {
             // Функция входа в систему
             async logIn(){
+                // Запускаем лоадер
                 this.loading = true
                 // Запрос на сервер и получение массива с пользователями
-                const {data} = await axios.get('https://superapp-boldinov-default-rtdb.firebaseio.com/Arr/users.json')
-                const arreyUsers = Object.keys(data).map(key => {
-                    return {
-                        id: key,
-                        ...data[key]
-                    }
-                })
+                const arreyUsers = await axios.get('http://localhost:3000/users')
+                // Останавливаем лоадер
                 this.loading = false
 
                 // ================= Валидация EMAIL =====================
@@ -76,14 +72,14 @@
                     this.loginInputLabel = 'Логин*'
                     // Проверка есть ли данный пользователь на сервере
                     // Если пользователь отсутствует
-                    if(arreyUsers.find(user => user.email === this.loginInput) === undefined){
+                    if(arreyUsers.data.find(user => user.email === this.loginInput) === undefined){
                         // Записываем ошибку
                         this.errors.login = true
                         // Выводим в лейбле сообщение об ошибке
                         this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
                     }else{
                         // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                        this.$store.state.superApp = arreyUsers.find(user => user.email === this.loginInput)
+                        this.$store.state.superApp = arreyUsers.data.find(user => user.email === this.loginInput)
                     }
                 }
 
