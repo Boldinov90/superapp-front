@@ -73,6 +73,7 @@
 <script>
     import axios from 'axios'
     import Animate from 'animate.css'
+    import { server } from '../utils/helper'
     export default {
         components: {
             Animate
@@ -115,11 +116,11 @@
             // Функция обновления DataBase
             async updateDataBase(){
                 // Запрос на сервер и получение массива с пользователями
-                const arreyUsers = await axios.get('http://localhost:3000/users')
+                const arreyUsers = await axios.get(`${server.BASE_URL}/users`)
                 // Находим нужного пользователя по ID
                 const user = arreyUsers.data.find(user => user._id === this.$store.state.superApp._id)
                 // Обновляем данные на сервере
-                await axios.put(`http://localhost:3000/users/${user._id}`, {
+                await axios.put(`${server.BASE_URL}/users/${user._id}`, {
                     toDo: this.$store.state.superApp.toDo
                 })
             },

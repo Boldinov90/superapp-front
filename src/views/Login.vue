@@ -31,6 +31,7 @@
 <script>
     import axios from 'axios'
     import Loading from '../components/Loading.vue'
+    import { server } from '../utils/helper'
     export default {
         components: {
             Loading
@@ -54,13 +55,13 @@
                 // Запускаем лоадер
                 this.loading = true
                 // Запрос на сервер и получение массива с пользователями
-                const arreyUsers = await axios.get('http://localhost:3000/users')
+                const arreyUsers = await axios.get(`${server.BASE_URL}/users`)
                 // Останавливаем лоадер
                 this.loading = false
-
+                // console.log(arreyUsers.data)
                 // ================= Валидация EMAIL =====================
                 // Проверка введено ли что нибудь в поле email
-                if(this.loginInput.length === 0){  
+                if(this.loginInput.length === 0){
                     // Записываем ошибку
                     this.errors.login = true
                     // Выводим в лейбле сообщение об ошибке

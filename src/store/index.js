@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import axios from 'axios'
 
 export default createStore({
     state: {
@@ -12,9 +13,19 @@ export default createStore({
         }
     },
     mutations: {
+        updateLogInStatus(state){
+            state.superApp.logInTrue = !state.superApp.logInTrue  
+        }
     },
     actions: {
+        async getUser() {
+            const arreyUsers = await axios.get('http://localhost:3000/users')
+        }
     },
-    modules: {
-    }
+    getters: {
+        logInTrue(state) {
+            return state.superApp.logInTrue
+        }
+    },
+    modules: {}
 })

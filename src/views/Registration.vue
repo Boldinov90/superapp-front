@@ -23,7 +23,7 @@
                 placeholder="Укажите Ваш Email"
                 :class="{input_error: errors.email}"
             >
-            <!-- ============= Имя ======================-->
+            <!-- ============= Name ======================-->
             <label 
                 for="name" 
                 class="input-label" 
@@ -38,7 +38,7 @@
                 placeholder="Укажите Ваше имя"
                 :class="{input_error: errors.name}"
             >
-            <!-- ===============Password ======================= -->
+            <!-- =============== Password ======================= -->
             <label 
                 for="password" 
                 class="input-label" 
@@ -83,6 +83,7 @@
 <script>
     import axios from 'axios'
     import Loading from '../components/Loading.vue'
+    import { server } from '../utils/helper'
     export default {
         components: {
             Loading
@@ -115,7 +116,7 @@
                 // Запускаем лоадер
                 this.loading = true
                 // Загружаем список пользователей с сервера
-                const arreyUsers = await axios.get('http://localhost:3000/users')
+                const arreyUsers = await axios.get(`${server.BASE_URL}/users`)
                 // Останавливаем лоадер
                 this.loading = false
 
@@ -200,7 +201,7 @@
                     this.errors.passwordСonfirm === null){
                     this.loading = true
 
-                    const response = await axios.post('http://localhost:3000/users', {
+                    const response = await axios.post(`${server.BASE_URL}/auth/register`, {
                         email: this.email,
                         name: this.name,
                         password: this.password
