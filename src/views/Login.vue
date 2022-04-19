@@ -5,7 +5,7 @@
                 Welcome to my test application and make yourself at home. 
             </div>
             <div class="text-subtitle">
-                Войдите под своей учетной записью, если таковая отсутствует - зарегистрируйтесь. При регистрации используйте любой выдуманный электронный адрес. Данный функционал создан для ознакомления и демонстрации навыка и не нацелен на безопасность. В качестве базы данных задействован Firebase.
+                Войдите под своей учетной записью, если таковая отсутствует - зарегистрируйтесь. При регистрации используйте любой выдуманный электронный адрес. Данный функционал создан для ознакомления и демонстрации навыка и не нацелен на безопасность. В качестве базы данных задействован MongoDB.
             </div>
         </div>
         <div class="content__form-wrapper">
@@ -54,25 +54,31 @@
             async logIn(){
                 // Запускаем лоадер
                 this.loading = true
-                // Запрос на сервер и получение массива с пользователями
-                // const arreyUsers = await axios.get(`${server.BASE_URL}/users`)
-                // const response = await axios.post(`${server.BASE_URL}/auth/login`, {
-                //     email: this.loginInput,
-                //     name: '',
-                //     password: this.passwordInput
-                // })
-                // this.loading = false
-                // this.$store.state.superApp.logInTrue = true
-
                 const response = await axios.post(`${server.BASE_URL}/auth/login`, {
                     email: this.loginInput,
                     name: '',
-                    password: this.passwordInput
+                    password: this.passwordInput,
+                    toDo: []
                 })
                 this.loading = false
-                this.$store.state.superApp.logInTrue = true
-                console.log(response)
-
+                console.log(response.data.user)
+                if(!response.data.user.error){
+                    this.$store.state.superApp.logInTrue = true
+                    this.$store.state.superApp.name = response.data.user.name
+                    this.$router.push('/')
+                }else if(response.data.user.error === 'Пользователь не найден. Зарегистрируйтесь*'){
+                    this.errors.login = true
+                    this.loginInputLabel = response.data.user.error
+                }else if(response.data.user.error === 'Поле не может быть пустым*'){
+                    this.errors.password = true
+                    this.passwordInputLabel = response.data.user.error
+                }else if(response.data.user.error === 'Пароль должен состоять миним из 6 символов*'){
+                    this.errors.password = true
+                    this.passwordInputLabel = response.data.user.error
+                }else if(response.data.user.error === 'Пароль неверный*'){
+                    this.errors.password = true
+                    this.passwordInputLabel = response.data.user.error
+                }
 
 
 
@@ -155,18 +161,18 @@
             }
         },
         watch: {
-            // loginInput(){
-            //     // Отменяем ошибку
-            //     this.errors.login = null
-            //     // Возвращаем лейбл в исходное состояние
-            //     this.loginInputLabel = 'Логин*'
-            // },
-            // passwordInput(){
-            //     // Отменяем ошибку
-            //     this.errors.password = null
-            //     // Возвращаем лейбл в исходное состояние
-            //     this.passwordInputLabel = 'Пароль*'
-            // }
+            loginInput(){
+                // Отменяем ошибку
+                this.errors.login = null
+                // Возвращаем лейбл в исходное состояние
+                this.loginInputLabel = 'Логин*'
+            },
+            passwordInput(){
+                // Отменяем ошибку
+                this.errors.password = null
+                // Возвращаем лейбл в исходное состояние
+                this.passwordInputLabel = 'Пароль*'
+            }
         }
     }
 </script>
