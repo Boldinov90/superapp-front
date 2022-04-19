@@ -52,33 +52,37 @@
         methods: {
             // Функция входа в систему
             async logIn(){
-                // Запускаем лоадер
-                this.loading = true
-                const response = await axios.post(`${server.BASE_URL}/auth/login`, {
-                    email: this.loginInput,
-                    name: '',
-                    password: this.passwordInput,
-                    toDo: []
-                })
-                this.loading = false
-                console.log(response.data.user)
-                if(!response.data.user.error){
-                    this.$store.state.superApp.logInTrue = true
-                    this.$store.state.superApp.name = response.data.user.name
-                    this.$router.push('/')
-                }else if(response.data.user.error === 'Пользователь не найден. Зарегистрируйтесь*'){
+                if(this.loginInput.length === 0){
                     this.errors.login = true
-                    this.loginInputLabel = response.data.user.error
-                }else if(response.data.user.error === 'Поле не может быть пустым*'){
-                    this.errors.password = true
-                    this.passwordInputLabel = response.data.user.error
-                }else if(response.data.user.error === 'Пароль должен состоять миним из 6 символов*'){
-                    this.errors.password = true
-                    this.passwordInputLabel = response.data.user.error
-                }else if(response.data.user.error === 'Пароль неверный*'){
-                    this.errors.password = true
-                    this.passwordInputLabel = response.data.user.error
+                    this.loginInputLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Запускаем лоадер
+                    this.loading = true
+                    const response = await axios.post(`${server.BASE_URL}/auth/login`, {
+                        email: this.loginInput,
+                        password: this.passwordInput
+                    })
+                    this.loading = false
+                    console.log(response.data.user)
+                    if(!response.data.user.error){
+                        this.$store.state.superApp.logInTrue = true
+                        this.$store.state.superApp.name = response.data.user.name
+                        this.$router.push('/')
+                    }else if(response.data.user.error === 'Пользователь не найден. Зарегистрируйтесь*'){
+                        this.errors.login = true
+                        this.loginInputLabel = response.data.user.error
+                    }else if(response.data.user.error === 'Поле не может быть пустым*'){
+                        this.errors.password = true
+                        this.passwordInputLabel = response.data.user.error
+                    }else if(response.data.user.error === 'Пароль должен состоять миним из 6 символов*'){
+                        this.errors.password = true
+                        this.passwordInputLabel = response.data.user.error
+                    }else if(response.data.user.error === 'Пароль неверный*'){
+                        this.errors.password = true
+                        this.passwordInputLabel = response.data.user.error
+                    }
                 }
+                
 
 
 

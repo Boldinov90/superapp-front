@@ -113,40 +113,45 @@
                 this.$router.push('/login')
             },
             async setNewUser(){
-                // Запускаем лоадер
-                this.loading = true
-                // Загружаем список пользователей с сервера
-                const arreyUsers = await axios.post(`${server.BASE_URL}/auth/register`, {
-                    email: this.email,
-                    name: this.name,
-                    password: this.password
-                })
+                // // Запускаем лоадер
+                // this.loading = true
+                // // Загружаем список пользователей с сервера
+                // const arreyUsers = await axios.post(`${server.BASE_URL}/auth/register`, {
+                //     email: this.email,
+                //     name: this.name,
+                //     password: this.password,
+                //     passwordСonfirm: this.passwordСonfirm,
+                // })
                 // Останавливаем лоадер
-                this.loading = false
-                console.log(arreyUsers)
+                // this.loading = false
+                // console.log(arreyUsers)
 
-                // // ================= Валидация EMAIL =====================
-                // // Проверка введено ли что нибудь в поле email
-                // if(this.email.length === 0){
-                //     // Записываем ошибку
-                //     this.errors.email = true
-                //     // Выводим в лейбле сообщение об ошибке
-                //     this.emailLabel = 'Поле не может быть пустым*'
-                // }else{
-                //     // Отменяем ошибку
-                //     this.errors.email = null
-                //     // Возвращаем лейбл в исходное состояние
-                //     this.emailLabel = 'Логин*'
-                //     // Проверка есть ли данный пользователь на сервере
-                //     if(arreyUsers.data.find(user => user.email === this.email)){
-                //         // Записываем ошибку
-                //         this.errors.email = true
-                //         // Выводим в лейбле сообщение об ошибке
-                //         this.emailLabel = 'Пользователь с таким именем уже существует*'
-                //         // Очищаем поле email
-                //         // this.email = ''
-                //     }
-                // }
+                // ================= Валидация EMAIL =====================
+                // Проверка введено ли что нибудь в поле email
+                if(this.email.length === 0){
+                    // Записываем ошибку
+                    this.errors.email = true
+                    // Выводим в лейбле сообщение об ошибке
+                    this.emailLabel = 'Поле не может быть пустым*'
+                }else{
+                    // Отменяем ошибку
+                    // this.errors.email = null
+                    // // Возвращаем лейбл в исходное состояние
+                    // this.emailLabel = 'Логин*'
+                    this.loading = true
+                    const response = await axios.post(`${server.BASE_URL}/auth/register`, {
+                        email: this.email,
+                        name: this.name,
+                        password: this.password,
+                        passwordConfirm: this.passwordСonfirm
+                    })
+                    this.loading = false
+                    console.log(response.data)
+                    // if(response.data.user.error === 'Пользователь с таким адресом уже существует*'){
+                    //     this.errors.email = true
+                    //     this.emailLabel = response.data.user.error
+                    // }
+                }
 
                 // // ================= Валидация NAME =====================
                 // // Проверка введено ли что нибудь в поле name
