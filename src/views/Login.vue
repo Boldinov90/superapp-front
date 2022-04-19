@@ -52,112 +52,27 @@
         methods: {
             // Функция входа в систему
             async logIn(){
-                if(this.loginInput.length === 0){
+                // Запускаем лоадер
+                this.loading = true
+                const response = await axios.post(`${server.BASE_URL}/auth/login`, {
+                    email: this.loginInput,
+                    password: this.passwordInput
+                })
+                this.loading = false
+                if(response.data.email){
                     this.errors.login = true
-                    this.loginInputLabel = 'Поле не может быть пустым*'
-                }else{
-                    // Запускаем лоадер
-                    this.loading = true
-                    const response = await axios.post(`${server.BASE_URL}/auth/login`, {
-                        email: this.loginInput,
-                        password: this.passwordInput
-                    })
-                    this.loading = false
-                    console.log(response.data.user)
-                    if(!response.data.user.error){
-                        this.$store.state.superApp.logInTrue = true
-                        this.$store.state.superApp.name = response.data.user.name
-                        this.$router.push('/')
-                    }else if(response.data.user.error === 'Пользователь не найден. Зарегистрируйтесь*'){
-                        this.errors.login = true
-                        this.loginInputLabel = response.data.user.error
-                    }else if(response.data.user.error === 'Поле не может быть пустым*'){
-                        this.errors.password = true
-                        this.passwordInputLabel = response.data.user.error
-                    }else if(response.data.user.error === 'Пароль должен состоять миним из 6 символов*'){
-                        this.errors.password = true
-                        this.passwordInputLabel = response.data.user.error
-                    }else if(response.data.user.error === 'Пароль неверный*'){
-                        this.errors.password = true
-                        this.passwordInputLabel = response.data.user.error
-                    }
+                    this.loginInputLabel = response.data.email
                 }
-                
-
-
-
-
-                // console.log(response)
-
-                // const response = await axios.post(`${server.BASE_URL}/auth/login`, {
-                //     email: this.loginInput,
-                //     name: '',
-                //     password: this.passwordInput
-                // })
-                
-                // if(response){
-                //     console.log(response.data.user)
-                //     this.loading = false
-                //     this.$store.state.superApp.logInTrue = true
-                // }else{
-                //     console.log('Ошибка')
-                // }
-                // Останавливаем лоадер
-                // this.loading = false
-                // this.$store.state.superApp.logInTrue = true
-
-                // // console.log(arreyUsers.data)
-                // // ================= Валидация EMAIL =====================
-                // // Проверка введено ли что нибудь в поле email
-                // if(this.loginInput.length === 0){
-                //     // Записываем ошибку
-                //     this.errors.login = true
-                //     // Выводим в лейбле сообщение об ошибке
-                //     this.loginInputLabel = 'Поле не может быть пустым*'
-                // }else{
-                //     // Отменяем ошибку
-                //     this.errors.login = null
-                //     // Возвращаем лейбл в исходное состояние
-                //     this.loginInputLabel = 'Логин*'
-                //     // Проверка есть ли данный пользователь на сервере
-                //     // Если пользователь отсутствует
-                //     if(arreyUsers.data.find(user => user.email === this.loginInput) === undefined){
-                //         // Записываем ошибку
-                //         this.errors.login = true
-                //         // Выводим в лейбле сообщение об ошибке
-                //         this.loginInputLabel = 'Пользователь не найден. Зарегистрируйтесь*'
-                //     }else{
-                //         // Поиск пользователя в массиве с логином из инпута и запись объекта во vuex
-                //         this.$store.state.superApp = arreyUsers.data.find(user => user.email === this.loginInput)
-                //     }
-                // }
-
-                // // ================= Валидация PASSWORD =====================
-                // // Проверка введено ли что нибудь в поле password
-                // if(this.passwordInput.length === 0){
-                //     // Записываем ошибку
-                //     this.errors.password = true
-                //     // Выводим в лейбле сообщение об ошибке
-                //     this.passwordInputLabel = 'Поле не может быть пустым*'
-                // }else{
-                //     // Отменяем ошибку
-                //     this.errors.password = null
-                //     // Возвращаем лейбл в исходное состояние
-                //     this.passwordLabel = 'Пароль*'
-                //     if(this.$store.state.superApp.password !== this.passwordInput){
-                //         // Записываем ошибку
-                //         this.errors.password = true
-                //         // Выводим в лейбле сообщение об ошибке
-                //         this.passwordInputLabel = 'Пароль неверный*'
-                //     }else{
-                //         // Обозначение во vuex, что авторизация произведена
-                //         this.$store.state.superApp.logInTrue = true
-                //         // Обозначение в localstorage данные пользователя, и что авторизация произведена
-                //         localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
-                //         // Переход на главную страницу
-                //         this.$router.push('/')
-                //     }
-                // }
+                if(response.data.password){
+                    this.errors.password = true
+                    this.passwordInputLabel = response.data.password
+                }
+                if(response.data.user){
+                    this.registrationDone = true
+                    this.$store.state.superApp.logInTrue = true
+                    this.$store.state.superApp.name = response.data.user.name
+                    this.$router.push('/')
+                }
             },
             // Функция перехода на страницу регистрации (один из вариантов, можно сделать в html через "<router-link to=...")
             goToRegistration(){

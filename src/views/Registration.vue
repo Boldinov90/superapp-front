@@ -113,126 +113,34 @@
                 this.$router.push('/login')
             },
             async setNewUser(){
-                // // Запускаем лоадер
-                // this.loading = true
-                // // Загружаем список пользователей с сервера
-                // const arreyUsers = await axios.post(`${server.BASE_URL}/auth/register`, {
-                //     email: this.email,
-                //     name: this.name,
-                //     password: this.password,
-                //     passwordСonfirm: this.passwordСonfirm,
-                // })
-                // Останавливаем лоадер
-                // this.loading = false
-                // console.log(arreyUsers)
-
-                // ================= Валидация EMAIL =====================
-                // Проверка введено ли что нибудь в поле email
-                if(this.email.length === 0){
-                    // Записываем ошибку
+                this.loading = true
+                const response = await axios.post(`${server.BASE_URL}/auth/register`, {
+                    email: this.email,
+                    name: this.name,
+                    password: this.password,
+                    passwordConfirm: this.passwordСonfirm
+                })
+                this.loading = false
+                console.log(response.data)
+                if(response.data.email){
                     this.errors.email = true
-                    // Выводим в лейбле сообщение об ошибке
-                    this.emailLabel = 'Поле не может быть пустым*'
-                }else{
-                    // Отменяем ошибку
-                    // this.errors.email = null
-                    // // Возвращаем лейбл в исходное состояние
-                    // this.emailLabel = 'Логин*'
-                    this.loading = true
-                    const response = await axios.post(`${server.BASE_URL}/auth/register`, {
-                        email: this.email,
-                        name: this.name,
-                        password: this.password,
-                        passwordConfirm: this.passwordСonfirm
-                    })
-                    this.loading = false
-                    console.log(response.data)
-                    // if(response.data.user.error === 'Пользователь с таким адресом уже существует*'){
-                    //     this.errors.email = true
-                    //     this.emailLabel = response.data.user.error
-                    // }
+                    this.emailLabel = response.data.email
                 }
-
-                // // ================= Валидация NAME =====================
-                // // Проверка введено ли что нибудь в поле name
-                // if(this.name.length === 0){
-                //     // Записываем ошибку
-                //     this.errors.name = true
-                //     // Выводим в лейбле сообщение об ошибке
-                //     this.nameLabel = 'Поле не может быть пустым*'
-                // }else{
-                //     // Отменяем ошибку
-                //     this.errors.name = null
-                //     // Возвращаем лейбл в исходное состояние
-                //     this.nameLabel = 'Имя*'
-                // }
-
-                // // ================= Валидация PASSWORD =====================
-                // // Проверка введено ли что нибудь в поле password
-                // if(this.password.length === 0){
-                //     // Записываем ошибку
-                //     this.errors.password = true
-                //     // Выводим в лейбле сообщение об ошибке
-                //     this.passwordLabel = 'Поле не может быть пустым*'
-                // }else{
-                //     // Отменяем ошибку
-                //     this.errors.password = null
-                //     // Возвращаем лейбл в исходное состояние
-                //     this.passwordLabel = 'Пароль*'
-                // }
-
-                // // ================= Валидация PASSWORDCONFIRM =====================
-                // // Проверка введено ли что нибудь в поле passwordConfirm
-                // if(this.passwordСonfirm.length === 0){
-                //     // Записываем ошибку
-                //     this.errors.passwordСonfirm = true
-                //     // Выводим в лейбле сообщение об ошибке
-                //     this.passwordСonfirmLabel = 'Поле не может быть пустым*'
-                // }else{
-                //     // Проверка подтверждения пароля. Пароль должен совпадать
-                //     if(this.password !== this.passwordСonfirm){
-                //         // Записываем ошибку
-                //         this.errors.passwordСonfirm = true
-                //         // Выводим в лейбле сообщение об ошибке
-                //         this.passwordСonfirmLabel = 'Пароли не совпадают'
-                //     }
-                //     else{
-                //         // Отменяем ошибку
-                //         this.errors.passwordСonfirm = null
-                //         // Возвращаем лейбл в исходное состояние
-                //         this.passwordСonfirmLabel = 'Пароли совпадают*'
-                //     }
-                // }
-        
-                // // В случае валидности, отправляем данные из формы
-                // if( this.errors.email === null && 
-                //     this.errors.name === null && 
-                //     this.errors.password === null && 
-                //     this.errors.passwordСonfirm === null){
-                //     this.loading = true
-
-                //     const response = await axios.post(`${server.BASE_URL}/auth/register`, {
-                //         email: this.email,
-                //         name: this.name,
-                //         password: this.password
-                //     })
-                //     // Очищаем поля
-                //     this.email = ''
-                //     this.name = ''
-                //     this.password = ''
-                //     this.passwordConfirm = ''
-                //     // Если ответ получен
-                //     if(response){
-                //         this.loading = false
-                //         // Говорим приложению, что регистрация прошла успешна
-                //         this.registrationDone = true
-                //     }
-                // }
-                // const data2 = await axios.get('http://localhost:3000/users')
-                // console.log(data2.data)
-                // data2.data.forEach(element => {
-                //     console.log(element._id)
-                // })
+                if(response.data.name){
+                    this.errors.name = true
+                    this.nameLabel = response.data.name
+                }
+                if(response.data.password){
+                    this.errors.password = true
+                    this.passwordLabel = response.data.password
+                }
+                if(response.data.passwordConfirm){
+                    this.errors.passwordСonfirm = true
+                    this.passwordСonfirmLabel = response.data.passwordConfirm
+                }
+                if(response.data.user){
+                    this.registrationDone = true
+                }
             }
         },
         watch:{
