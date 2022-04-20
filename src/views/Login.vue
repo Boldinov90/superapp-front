@@ -54,20 +54,30 @@
             async logIn(){
                 // Запускаем лоадер
                 this.loading = true
+                // Отправляем логин и пароль, введенные в форме, на сервер (валидация происходить на стороне BACKEND)
                 const response = await axios.post(`${server.BASE_URL}/auth/login`, {
                     email: this.loginInput,
                     password: this.passwordInput
                 })
+                // После получения ответа с сервера отключаем лоадер
                 this.loading = false
+                // Если в ответе есть ошибка валидации Email
                 if(response.data.email){
+                    // Записываем ошибку
                     this.errors.login = true
+                    // Передаем текст ошибки в label формы
                     this.loginInputLabel = response.data.email
                 }
+                // Если в ответе есть ошибка валидации пароля
                 if(response.data.password){
+                    // Записываем ошибку
                     this.errors.password = true
+                    // Передаем текст ошибки в label формы
                     this.passwordInputLabel = response.data.password
                 }
+                // Если ответ пришел с успешной валидацией
                 if(response.data.user){
+                    // Фиксируем успешный вход в систему
                     this.registrationDone = true
                     this.$store.state.superApp.logInTrue = true
                     this.$store.state.superApp.name = response.data.user.name
