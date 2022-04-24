@@ -25,7 +25,7 @@
         <div class="tasks-list">
             <div class="add-task-form"> 
                 <div class="add-task-form-input">
-                    <input type="text" v-model="NewTaskText" placeholder="Введите текст новой задачи" @keyup.enter="addTask">
+                    <input type="text" v-model="newTaskText" placeholder="Введите текст новой задачи" @keyup.enter="addTask">
                 </div>
                 <button class="btn" @click.prevent="addTask">Добавить задачу</button>
             </div>
@@ -73,7 +73,8 @@
 <script>
     import axios from 'axios'
     import Animate from 'animate.css'
-    import { server } from '../utils/helper'
+    // import { server } from '../utils/helper'
+    import {mapActions, mapGetters} from 'vuex'
     export default {
         components: {
             Animate
@@ -108,37 +109,45 @@
                 isAllTasksZero: null,
                 isActiveTasksZero: null,
                 isDoneTasksZero: null,
-                NewTaskText: '',
+                newTaskText: '',
                 activeNav: {}
             }
         },
+        computed: {
+            ...mapGetters([
+                'LOGINSTATUS',
+                'SUPERAPP'
+            ])
+        },
         methods: {
+            ...mapActions([
+                'SET_USER_TO_STATE',
+                'TOGGLE_LOGIN_STATUS_IN_STATE',
+                'SET_TODO_TO_STATE',
+                'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE'
+            ]),
             // Функция обновления DataBase
             async updateDataBase(){
-                // Запрос на сервер и получение массива с пользователями
-                const arreyUsers = await axios.get(`${server.BASE_URL}/users`)
-                // Находим нужного пользователя по ID
-                const user = arreyUsers.data.find(user => user._id === this.$store.state.superApp._id)
                 // Обновляем данные на сервере
-                await axios.put(`${server.BASE_URL}/users/${user._id}`, {
+                await axios.put('http://localhost:3000/api/auth/62616965fc481b1d3a1441a8', {
                     toDo: this.$store.state.superApp.toDo
                 })
             },
 
             // Функция обновления LocalStorage
-            updateLocalStorage(){
-                localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
-            },
+            // updateLocalStorage(){
+                // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+            // },
 
             // Функция добавления задачи
             addTask(){
                 // Делаем проверку введено ли что нибудь в поле ввода
-                if(this.NewTaskText !== ''){
+                if(this.newTaskText !== ''){
                     // Если да, то
                     // Создаем объект с задачей
                     const newTask = {
                         checkbox: false,
-                        taskName: this.NewTaskText,
+                        taskName: this.newTaskText,
                         createDate: new Date().toLocaleString()
                     }
                     // Добавляем задачу в начало массива с задачами
@@ -148,11 +157,11 @@
                     // Обновляем счетчик задач
                     this.countTasks()
                     // Обновляем LocalStorage
-                    this.updateLocalStorage()
+                    // this.updateLocalStorage()
                     // Обновляем данные на сервере
                     this.updateDataBase()
                     // Очищаем инпут
-                    this.NewTaskText = ''
+                    this.newTaskText = ''
                 // Если нет
                 }else{
                     // Говорим пользователю, что поле не может быть пустым
@@ -171,17 +180,17 @@
                 // Обновляем счетчик задач
                 this.countTasks()
                 // Обновляем LocalStorage
-                this.updateLocalStorage()
+                // this.updateLocalStorage()
                 // Обновляем данные на сервере
                 this.updateDataBase()
             },
 
-            // Обновление статуса задачи
+            // // Обновление статуса задачи
             changeStatusTask(task){
                 // Меняем статус на противоположное значение (true/false)
                 task.checkbox = !task.checkbox
                 // Обновляем LocalStorage
-                this.updateLocalStorage()
+                // this.updateLocalStorage()
                 // Обновляем данные на сервере
                 this.updateDataBase()
                 // Обновляем фильтры с небольшой задержкой для удобства восприятия
@@ -195,12 +204,18 @@
 
             // Функция сортировки задач
             tasksFilter(nav){ 
+                // Удаляем активный класс у всего массива навигации
+                // for(let task in this.tasksNav){
+                //     this.tasksNav[task].isActive = false
+                // }
                 // Записываем массив с задачами в песочницу
-                this.tasks = this.$store.state.superApp.toDo
+                this.tasks = this.SUPERAPP.toDo
                 // Записываем в переменную активного фильтра
-                this.activeNav = nav
+                // this.activeNav = nav
+                console.log(this.tasks)
+                // console.log(this.tasksNav)
                 // Обновляем VUEX
-                this.$store.state.superApp.activeNav = this.activeNav
+                // this.$store.state.superApp.activeNav = this.activeNav
                 // Обновляем LocalStorage
                 // this.updateLocalStorage()
                 // Если выбрано 'Все задачи'
@@ -216,6 +231,7 @@
                     this.isDoneTasksZero = false
                     this.isAllTasksZero = true
                 }
+                // console.log(nav.isActive)
                 // Если выбрано 'Активные задачи'
                 if(nav.name === 'activeTasks'){
                     // Удаляем активный класс у всего массива навигации
@@ -226,7 +242,7 @@
                     nav.isActive = true
                     // Удаляем из песочницы все кроме активных задач
                     this.tasks = this.tasks.filter(item => item.checkbox !== true)
-                    // Если массив-песочница пуста
+                    // Если массив-песочница пуст
                     if(this.tasks.length === 0){
                         // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
                         this.isActiveTasksZero = true
@@ -244,6 +260,7 @@
                     nav.isActive = true
                     // Удаляем из песочницы все кроме завершенных задач
                     this.tasks = this.tasks.filter(item => item.checkbox !== false)
+                    console.log(this.tasks)
                     // Если массив-песочница пуста
                     if(this.tasks.length === 0){
                         // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
@@ -259,11 +276,11 @@
                 // Перебираем массив с навигацией по задачам
                 this.tasksNav.forEach(item => {
                     // Записываем массив с задачами в песочницу
-                    let arr = this.$store.state.superApp.toDo
+                    let arr = this.SUPERAPP.toDo
                     // Если "Все задачи"
                     if(item.name === 'allTasks'){
                         // Записываем в переменную колличество всех задач
-                        item.count = this.$store.state.superApp.toDo.length
+                        item.count = this.SUPERAPP.toDo.length
                     }
                     // Если "Активные задачи"
                     if(item.name === 'activeTasks'){
@@ -278,45 +295,42 @@
                 })
             },
 
-            // Функция получения данных редактироваемой задачи
-            getChangeTextTask(task){
-                // Открываем форму редактирования текста задачи
-                this.isCorrectionTextTask = true
-                // Вводим d форму редактирования актуальный текст из базы данных
-                this.correctionTextTask = task.taskName
-                // Находим и записываем в переменную ID выбранной задачи
-                this.currentTaskId = this.$store.state.superApp.toDo.indexOf(task)
-            },
+            // // Функция получения данных редактироваемой задачи
+            // getChangeTextTask(task){
+            //     // Открываем форму редактирования текста задачи
+            //     this.isCorrectionTextTask = true
+            //     // Вводим d форму редактирования актуальный текст из базы данных
+            //     this.correctionTextTask = task.taskName
+            //     // Находим и записываем в переменную ID выбранной задачи
+            //     this.currentTaskId = this.$store.state.superApp.toDo.indexOf(task)
+            // },
 
-            // Функция редактирования и сохранения текста и даты задачи
-            saveChangeTextTask(){
-                // Находим по ID редактируемую задачу и записываем обновленный текст
-                this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
-                // Находим по ID редактируемую задачу и записываем обновленную дату
-                this.$store.state.superApp.toDo[this.currentTaskId].createDate = new Date().toLocaleString()
-                // Обновляем LocalStorage
-                this.updateLocalStorage()
-                // Обновляем данные на сервере
-                this.updateDataBase()
-                // Закрываем форму
-                this.isCorrectionTextTask = false
-            }
+            // // Функция редактирования и сохранения текста и даты задачи
+            // saveChangeTextTask(){
+            //     // Находим по ID редактируемую задачу и записываем обновленный текст
+            //     this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
+            //     // Находим по ID редактируемую задачу и записываем обновленную дату
+            //     this.$store.state.superApp.toDo[this.currentTaskId].createDate = new Date().toLocaleString()
+            //     // Обновляем LocalStorage
+            //     this.updateLocalStorage()
+            //     // Обновляем данные на сервере
+            //     this.updateDataBase()
+            //     // Закрываем форму
+            //     this.isCorrectionTextTask = false
+            // }
         },
         watch: {
         },
-        // При загрузке/обновлении страницы......
+        // При загрузке страницы......
         beforeMount(){
-            // Создаем пустой массив с дачами, в случае отсутствия его на сервере
-            if(!this.$store.state.superApp.toDo){
-                this.$store.state.superApp.toDo = []
-            }else{
-                // Обновляем массив-песочницу с задачами
-                this.tasks = this.$store.state.superApp.toDo
-            }
-            // Обновляем счетчик задач
+            this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
+            this.tasks = this.SUPERAPP.toDo
             this.countTasks()
-            // Обновляем LocalStorage
-            this.updateLocalStorage()
+        },
+        // При обновлении страницы......
+        beforeUpdate(){
+            this.tasks = this.SUPERAPP.toDo
+            this.countTasks()
         }
     }
 </script>

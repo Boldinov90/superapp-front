@@ -5,17 +5,19 @@
 
 <script>
     import Navbar from './components/Navbar.vue'
+    import {mapActions} from 'vuex'
     export default {
-        data(){
-            return{
-
-            }
-        },
-        methods: {
-
-        },
         components: {
             Navbar
+        },
+        methods: {
+            ...mapActions([
+                'SET_DATA_FROM_LOCALSTORAGE_TO_STATE'
+            ]),
+        },
+        // При загрузке страницы
+        beforeMount(){
+            this.SET_DATA_FROM_LOCALSTORAGE_TO_STATE()
         }
     }
 </script>

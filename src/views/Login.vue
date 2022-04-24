@@ -32,6 +32,7 @@
     import axios from 'axios'
     import Loading from '../components/Loading.vue'
     import { server } from '../utils/helper'
+    import {mapActions, mapGetters} from 'vuex'
     export default {
         components: {
             Loading
@@ -49,12 +50,23 @@
                 loading: false
             }
         },
+        computed: {
+            ...mapGetters([
+                'LOGINSTATUS',
+                'SUPERAPP'
+            ])
+        },
         methods: {
+            ...mapActions([
+                'SET_USER_TO_STATE',
+                'TOGGLE_LOGIN_STATUS_IN_STATE',
+                'SET_TODO_TO_STATE'
+            ]),
             // Функция входа в систему
             async logIn(){
                 // Запускаем лоадер
                 this.loading = true
-                // Отправляем логин и пароль, введенные в форме, на сервер (валидация происходить на стороне BACKEND)
+                // Отправляем логин и пароль, введенные в форме, на сервер (валидация происходить на стороне сервера)
                 const response = await axios.post(`${server.BASE_URL}/auth/login`, {
                     email: this.loginInput,
                     password: this.passwordInput
@@ -79,8 +91,23 @@
                 if(response.data.user){
                     // Фиксируем успешный вход в систему
                     this.registrationDone = true
-                    this.$store.state.superApp.logInTrue = true
-                    this.$store.state.superApp.name = response.data.user.name
+                    // Записываем во VUEX статус входа в систему
+                    this.TOGGLE_LOGIN_STATUS_IN_STATE()
+                    // Записываем во VUEX данные пользователя (id и name)
+                    this.SET_USER_TO_STATE(response)
+                    // Записываем во VUEX список задач пользователя
+                    this.SET_TODO_TO_STATE(response)
+                    // Создаем модель для localStorage, записываем данные пользователя и статус входа в систему
+                    const lS = {
+                        logInStatus: this.LOGINSTATUS,
+                        user: {
+                            id: this.SUPERAPP.user.id,
+                            name: this.SUPERAPP.user.name
+                        }
+                    }
+                    // Записываем данные в LocalStorage
+                    localStorage.setItem('superApp', JSON.stringify(lS))
+                    // Переходим на главную страницу приложения
                     this.$router.push('/')
                 }
             },

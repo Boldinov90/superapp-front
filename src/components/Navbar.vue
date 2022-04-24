@@ -4,7 +4,7 @@
             <div class="header__logo">
                 SUPERAPP
             </div>
-            <div class="header__nav" v-if="$store.state.superApp.logInTrue">
+            <div class="header__nav" v-if="LOGINSTATUS">
                 <ul class="header__navItemsList">
                     <li class="header__navItem">
                         <router-link class="navItem" to="/">Главная</router-link>
@@ -22,7 +22,7 @@
                         <router-link class="navItem btn" to="/login" @click.prevent="logOut">Выйти</router-link>
                     </li>
                     <div class="header__navItem">
-                        <div class="navItem user">{{$store.state.superApp.name}}</div>
+                        <div class="navItem user">{{SUPERAPP.user.name}}</div>
                     </div>
                 </ul>
             </div>
@@ -31,43 +31,40 @@
 </template>
 
 <script>
+    import {mapActions, mapGetters} from 'vuex'
     export default {
         data(){
             return{
                 user: {}
             }
         },
+        computed: {
+            ...mapGetters([
+                'SUPERAPP',
+                'LOGINSTATUS'
+            ])
+        },
         methods: {
+            ...mapActions([
+                'CLEAR_SUPERAPP_IN_STATE',
+                'TOGGLE_LOGIN_STATUS_IN_STATE',
+                'SET_DATA_FROM_LOCALSTORAGE_TO_STATE',
+                'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE'
+            ]),
             logOut(){
+                this.TOGGLE_LOGIN_STATUS_IN_STATE()
                 // Удаляем данные о пользователе из VUEX
-                this.$store.state.superApp = {}
+                this.CLEAR_SUPERAPP_IN_STATE()
                 // Обновляем Local Storage
-                localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+                localStorage.setItem('superApp', JSON.stringify(this.SUPERAPP))
             }
         },
         // При загрузке страницы
         beforeMount(){
-            // Получаем данные из localstorage
-            this.user = localStorage.getItem('superApp')
-            // если в localstorage пусто создаем запись (первый запуск приложения)
-            if(!this.user){
-                this.user = {
-                    logInTrue: false,
-                    name: ''
-                }
-                // Обновляем Local Storage
-                localStorage.setItem('superApp', JSON.stringify(this.user))
-            // если есть
-            }else{
-                // Получаем данные из Local Storage и записываем во VUEX
-                this.$store.state.superApp = JSON.parse(this.user)
-                // Если активалия произведена (loginTrue = true)
-                if(this.$store.state.superApp.logInTrue){
-                    // Ничего не делаем, оставляем все как есть
-                }else{
-                    // Иначе выходим на страницу логина
-                    this.$router.push('/login')
-                }
+            // this.SET_DATA_FROM_LOCALSTORAGE_TO_STATE()
+            // Если активалия не произведена (loginStatus = false)
+            if(!this.LOGINSTATUS){
+                this.$router.push('/login')
             }
         }
     }
