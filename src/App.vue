@@ -22,11 +22,6 @@
                 'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE'
             ]),
         },
-        // // При обновлении страницы......
-        // beforeUpdate(){
-        //     this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
-        // },
-        // При загрузке страницы
         beforeMount(){
             // Записываем данные из LocalStorage во VUEX
             this.SET_DATA_FROM_LOCALSTORAGE_TO_STATE()
@@ -40,6 +35,7 @@
 </script>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
     *{ 
         -ms-user-select: none;
         -moz-user-select: none;

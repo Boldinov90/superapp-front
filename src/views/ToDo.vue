@@ -73,7 +73,7 @@
 <script>
     import axios from 'axios'
     import Animate from 'animate.css'
-    // import { server } from '../utils/helper'
+    import { server } from '../utils/helper'
     import {mapActions, mapGetters} from 'vuex'
     export default {
         components: {
@@ -125,86 +125,80 @@
                 'SET_TODO_TO_STATE',
                 'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE',
                 'UPDATE_TODOSANDBOX_IN_STATE',
-                'FILTER_TODOSANDBOX_IN_STATE'
+                'FILTER_TODOSANDBOX_IN_STATE',
+                'ADD_NEWTASK_TO_STATE',
+                'DELETE_TASK_FROM_STATE',
+                'CHANGING_DATE_OF_UPDATED_TASK',
+                'CHANGING_TASKNAME_OF_UPDATED_TASK'
             ]),
             // Функция обновления DataBase
-            // async updateDataBase(){
-            //     // Обновляем данные на сервере
-            //     await axios.put('http://localhost:3000/api/auth/62616965fc481b1d3a1441a8', {
-            //         toDo: this.$store.state.superApp.toDo
-            //     })
-            // },
+            async updateDataBase(){
+                // Получаем ID пользователя из LocalStorage
+                let lS = JSON.parse(localStorage.getItem('superApp'))
+                // Обновляем данные на сервере
+                await axios.put(`${server.BASE_URL}/auth/${lS.user.id}`, {
+                    toDo: this.SUPERAPP.toDo
+                })
+            },
 
-            // // Функция обновления LocalStorage
-            // // updateLocalStorage(){
-            //     // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
-            // // },
+            // Функция добавления задачи
+            addTask(){
+                // Делаем проверку введено ли что нибудь в поле ввода
+                if(this.newTaskText !== ''){
+                    // Если да, то
+                    // Создаем объект с задачей
+                    const newTask = {
+                        checkbox: false,
+                        taskName: this.newTaskText,
+                        createDate: new Date().toLocaleString()
+                    }
+                    // Добавляем задачу в начало массива с задачами
+                    this.ADD_NEWTASK_TO_STATE(newTask)
+                    // Возвращаем настройки фильтра
+                    this.tasksFilter(this.activeNav) 
+                    // Обновляем счетчик задач
+                    this.countTasks()
+                    // Обновляем данные на сервере
+                    this.updateDataBase()
+                    // Очищаем инпут
+                    this.newTaskText = ''
+                // Если нет
+                }else{
+                    // Говорим пользователю, что поле не может быть пустым
+                    alert('Поле не может быть пустым, введите текст новой задачи!!!')
+                }
+            },
 
-            // // Функция добавления задачи
-            // addTask(){
-            //     // Делаем проверку введено ли что нибудь в поле ввода
-            //     if(this.newTaskText !== ''){
-            //         // Если да, то
-            //         // Создаем объект с задачей
-            //         const newTask = {
-            //             checkbox: false,
-            //             taskName: this.newTaskText,
-            //             createDate: new Date().toLocaleString()
-            //         }
-            //         // Добавляем задачу в начало массива с задачами
-            //         this.$store.state.superApp.toDo.unshift(newTask)
-            //         // Возвращаем настройки фильтра
-            //         this.tasksFilter(this.activeNav) 
-            //         // Обновляем счетчик задач
-            //         this.countTasks()
-            //         // Обновляем LocalStorage
-            //         // this.updateLocalStorage()
-            //         // Обновляем данные на сервере
-            //         this.updateDataBase()
-            //         // Очищаем инпут
-            //         this.newTaskText = ''
-            //     // Если нет
-            //     }else{
-            //         // Говорим пользователю, что поле не может быть пустым
-            //         alert('Поле не может быть пустым, введите текст новой задачи!!!')
-            //     }
-            // },
+            // Функция удаления задачи
+            deleteTask(task){
+                // Находим и удаляем выбранную задачу
+                this.DELETE_TASK_FROM_STATE(task)
+                // Возвращаем настройки фильтра
+                this.tasksFilter(this.activeNav) 
+                // Обновляем счетчик задач
+                this.countTasks()
+                // Обновляем данные на сервере
+                this.updateDataBase()
+            },
 
-            // // Функция удаления задачи
-            // deleteTask(task){
-            //     // Находим и удаляем выбранную задачу
-            //     this.$store.state.superApp.toDo = this.$store.state.superApp.toDo.filter(item => item !== task)
-            //     // Записываем обновленный массив в переменную 'TASKS'
-            //     this.tasks = this.$store.state.superApp.toDo
-            //     // Возвращаем настройки фильтра
-            //     this.tasksFilter(this.activeNav) 
-            //     // Обновляем счетчик задач
-            //     this.countTasks()
-            //     // Обновляем LocalStorage
-            //     // this.updateLocalStorage()
-            //     // Обновляем данные на сервере
-            //     this.updateDataBase()
-            // },
-
-            // // // Обновление статуса задачи
-            // changeStatusTask(task){
-            //     // Меняем статус на противоположное значение (true/false)
-            //     task.checkbox = !task.checkbox
-            //     // Обновляем LocalStorage
-            //     // this.updateLocalStorage()
-            //     // Обновляем данные на сервере
-            //     this.updateDataBase()
-            //     // Обновляем фильтры с небольшой задержкой для удобства восприятия
-            //     // console.log(task.checkbox)
-            //     setTimeout(() => {  
-            //         this.tasksFilter(this.activeNav) 
-            //         // Обновляем счетчик задач
-            //         this.countTasks()
-            //     }, 300)
-            // },
+            // Обновление статуса задачи
+            changeStatusTask(task){
+                // Меняем статус на противоположное значение (true/false)
+                task.checkbox = !task.checkbox
+                // Обновляем данные на сервере
+                this.updateDataBase()
+                // Обновляем фильтры с небольшой задержкой для удобства восприятия
+                setTimeout(() => {  
+                    this.tasksFilter(this.activeNav) 
+                    // Обновляем счетчик задач
+                    this.countTasks()
+                }, 300)
+            }, 
 
             // Функция сортировки задач
             tasksFilter(nav){ 
+                // Записываем в переменную активный фильтр
+                this.activeNav = nav
                 // Записываем массив с задачами в песочницу во VUEX
                 this.UPDATE_TODOSANDBOX_IN_STATE(this.SUPERAPP.toDo)
                 // Если выбрано 'Все задачи'
@@ -252,65 +246,79 @@
                 }
             },
 
-            // // Функция подсчета задач
-            // countTasks(){
-            //     // Перебираем массив с навигацией по задачам
-            //     this.tasksNav.forEach(item => {
-            //         // Записываем массив с задачами в песочницу
-            //         let arr = this.SUPERAPP.toDo
-            //         // Если "Все задачи"
-            //         if(item.name === 'allTasks'){
-            //             // Записываем в переменную колличество всех задач
-            //             item.count = this.SUPERAPP.toDo.length
-            //         }
-            //         // Если "Активные задачи"
-            //         if(item.name === 'activeTasks'){
-            //             // Записываем в переменную колличество активных задач
-            //             item.count = arr.filter(item => item.checkbox !== true).length
-            //         }
-            //         // Если "Завершенные задачи"
-            //         if(item.name === 'doneTasks'){
-            //             // Записываем в переменную колличество завершенных задач
-            //             item.count = arr.filter(item => item.checkbox !== false).length
-            //         }
-            //     })
-            // },
+            // Функция подсчета задач
+            countTasks(){
+                // Перебираем массив с навигацией по задачам
+                this.tasksNav.forEach(item => {
+                    // Записываем массив с задачами в песочницу
+                    let arr = this.SUPERAPP.toDo
+                    // Если "Все задачи"
+                    if(item.name === 'allTasks'){
+                        // Записываем в переменную колличество всех задач
+                        item.count = this.SUPERAPP.toDo.length
+                    }
+                    // Если "Активные задачи"
+                    if(item.name === 'activeTasks'){
+                        // Записываем в переменную колличество активных задач
+                        item.count = arr.filter(item => item.checkbox !== true).length
+                    }
+                    // Если "Завершенные задачи"
+                    if(item.name === 'doneTasks'){
+                        // Записываем в переменную колличество завершенных задач
+                        item.count = arr.filter(item => item.checkbox !== false).length
+                    }
+                })
+            },
 
-            // // Функция получения данных редактироваемой задачи
-            // getChangeTextTask(task){
-            //     // Открываем форму редактирования текста задачи
-            //     this.isCorrectionTextTask = true
-            //     // Вводим d форму редактирования актуальный текст из базы данных
-            //     this.correctionTextTask = task.taskName
-            //     // Находим и записываем в переменную ID выбранной задачи
-            //     this.currentTaskId = this.$store.state.superApp.toDo.indexOf(task)
-            // },
+            // Функция получения данных редактироваемой задачи
+            getChangeTextTask(task){
+                // Открываем форму редактирования текста задачи
+                this.isCorrectionTextTask = true
+                // Вводим в форму редактирования актуальный текст из базы данных
+                this.correctionTextTask = task.taskName
+                // Находим и записываем в переменную ID выбранной задачи
+                this.currentTaskId = this.SUPERAPP.toDo.indexOf(task)
+            },
 
             // Функция редактирования и сохранения текста и даты задачи
             saveChangeTextTask(){
+                // Объединяем в объект измененные поля задачи
+                const updatedTask = {
+                    id: this.currentTaskId,
+                    taskName: this.correctionTextTask
+                }
                 // Находим по ID редактируемую задачу и записываем обновленный текст
-                this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
+                this.CHANGING_TASKNAME_OF_UPDATED_TASK(updatedTask)
                 // Находим по ID редактируемую задачу и записываем обновленную дату
-                this.$store.state.superApp.toDo[this.currentTaskId].createDate = new Date().toLocaleString()
+                this.CHANGING_DATE_OF_UPDATED_TASK(this.currentTaskId)
                 // Обновляем данные на сервере
                 this.updateDataBase()
                 // Закрываем форму
                 this.isCorrectionTextTask = false
             },
+
+            // Удаление активного класса у всего массива навигации
             deleteNavActiveClass(){
-                // Удаляем активный класс у всего массива навигации
                 for(let task in this.tasksNav){
                     this.tasksNav[task].isActive = false
                 }
             }
         },
         watch: {
+        },
+        beforeMount(){
+            this.countTasks()
+            this.tasksFilter(this.activeNav) 
+        },
+        beforeUpdate(){
+            // this.tasksFilter(this.activeNav) 
+            this.countTasks()
         }
     }
 </script>
 
 <style scoped>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
+    /* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap'); */
     *{
         font-family: 'Montserrat', sans-serif;
     }
