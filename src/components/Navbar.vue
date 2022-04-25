@@ -47,23 +47,15 @@
         methods: {
             ...mapActions([
                 'CLEAR_SUPERAPP_IN_STATE',
-                'TOGGLE_LOGIN_STATUS_IN_STATE',
-                'SET_DATA_FROM_LOCALSTORAGE_TO_STATE',
-                'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE'
+                'TOGGLE_LOGIN_STATUS_IN_STATE'
             ]),
             logOut(){
+                // Меняем статус авторизации приложения
                 this.TOGGLE_LOGIN_STATUS_IN_STATE()
                 // Удаляем данные о пользователе из VUEX
                 this.CLEAR_SUPERAPP_IN_STATE()
                 // Обновляем Local Storage
                 localStorage.setItem('superApp', JSON.stringify(this.SUPERAPP))
-            }
-        },
-        // При загрузке страницы
-        beforeMount(){
-            // this.SET_DATA_FROM_LOCALSTORAGE_TO_STATE()
-            // Если активалия не произведена (loginStatus = false)
-            if(!this.LOGINSTATUS){
                 this.$router.push('/login')
             }
         }

@@ -5,19 +5,36 @@
 
 <script>
     import Navbar from './components/Navbar.vue'
-    import {mapActions} from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     export default {
         components: {
             Navbar
         },
+        computed: {
+            ...mapGetters([
+                'LOGINSTATUS',
+                'SUPERAPP'
+            ])
+        },
         methods: {
             ...mapActions([
-                'SET_DATA_FROM_LOCALSTORAGE_TO_STATE'
+                'SET_DATA_FROM_LOCALSTORAGE_TO_STATE',
+                'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE'
             ]),
         },
+        // // При обновлении страницы......
+        // beforeUpdate(){
+        //     this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
+        // },
         // При загрузке страницы
         beforeMount(){
+            // Записываем данные из LocalStorage во VUEX
             this.SET_DATA_FROM_LOCALSTORAGE_TO_STATE()
+            // // Если вход выполнен
+            if(this.LOGINSTATUS){
+                // Записываем список задач с сервера во VUEX
+                this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
+            }
         }
     }
 </script>

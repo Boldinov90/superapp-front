@@ -29,8 +29,8 @@
                 </div>
                 <button class="btn" @click.prevent="addTask">Добавить задачу</button>
             </div>
-            <div class="task-item-wrapper" v-if="tasks.length !== 0">
-                <div class="task-item" v-for="task of tasks" :key="task">
+            <div class="task-item-wrapper" v-if="SUPERAPP.toDoSandBox.length !== 0">
+                <div class="task-item" v-for="task of SUPERAPP.toDoSandBox" :key="task">
                     <input
                         class="task-item-check_box" 
                         type="checkbox" 
@@ -104,7 +104,6 @@
                         count: ''
                     }
                 ],
-                toDo:[],
                 tasks: [],
                 isAllTasksZero: null,
                 isActiveTasksZero: null,
@@ -124,106 +123,94 @@
                 'SET_USER_TO_STATE',
                 'TOGGLE_LOGIN_STATUS_IN_STATE',
                 'SET_TODO_TO_STATE',
-                'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE'
+                'GET_USERTODO_BY_ID_AND_SAVE_TO_STATE',
+                'UPDATE_TODOSANDBOX_IN_STATE',
+                'FILTER_TODOSANDBOX_IN_STATE'
             ]),
             // Функция обновления DataBase
-            async updateDataBase(){
-                // Обновляем данные на сервере
-                await axios.put('http://localhost:3000/api/auth/62616965fc481b1d3a1441a8', {
-                    toDo: this.$store.state.superApp.toDo
-                })
-            },
-
-            // Функция обновления LocalStorage
-            // updateLocalStorage(){
-                // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+            // async updateDataBase(){
+            //     // Обновляем данные на сервере
+            //     await axios.put('http://localhost:3000/api/auth/62616965fc481b1d3a1441a8', {
+            //         toDo: this.$store.state.superApp.toDo
+            //     })
             // },
 
-            // Функция добавления задачи
-            addTask(){
-                // Делаем проверку введено ли что нибудь в поле ввода
-                if(this.newTaskText !== ''){
-                    // Если да, то
-                    // Создаем объект с задачей
-                    const newTask = {
-                        checkbox: false,
-                        taskName: this.newTaskText,
-                        createDate: new Date().toLocaleString()
-                    }
-                    // Добавляем задачу в начало массива с задачами
-                    this.$store.state.superApp.toDo.unshift(newTask)
-                    // Возвращаем настройки фильтра
-                    this.tasksFilter(this.activeNav) 
-                    // Обновляем счетчик задач
-                    this.countTasks()
-                    // Обновляем LocalStorage
-                    // this.updateLocalStorage()
-                    // Обновляем данные на сервере
-                    this.updateDataBase()
-                    // Очищаем инпут
-                    this.newTaskText = ''
-                // Если нет
-                }else{
-                    // Говорим пользователю, что поле не может быть пустым
-                    alert('Поле не может быть пустым, введите текст новой задачи!!!')
-                }
-            },
+            // // Функция обновления LocalStorage
+            // // updateLocalStorage(){
+            //     // localStorage.setItem('superApp', JSON.stringify(this.$store.state.superApp))
+            // // },
 
-            // Функция удаления задачи
-            deleteTask(task){
-                // Находим и удаляем выбранную задачу
-                this.$store.state.superApp.toDo = this.$store.state.superApp.toDo.filter(item => item !== task)
-                // Записываем обновленный массив в переменную 'TASKS'
-                this.tasks = this.$store.state.superApp.toDo
-                // Возвращаем настройки фильтра
-                this.tasksFilter(this.activeNav) 
-                // Обновляем счетчик задач
-                this.countTasks()
-                // Обновляем LocalStorage
-                // this.updateLocalStorage()
-                // Обновляем данные на сервере
-                this.updateDataBase()
-            },
+            // // Функция добавления задачи
+            // addTask(){
+            //     // Делаем проверку введено ли что нибудь в поле ввода
+            //     if(this.newTaskText !== ''){
+            //         // Если да, то
+            //         // Создаем объект с задачей
+            //         const newTask = {
+            //             checkbox: false,
+            //             taskName: this.newTaskText,
+            //             createDate: new Date().toLocaleString()
+            //         }
+            //         // Добавляем задачу в начало массива с задачами
+            //         this.$store.state.superApp.toDo.unshift(newTask)
+            //         // Возвращаем настройки фильтра
+            //         this.tasksFilter(this.activeNav) 
+            //         // Обновляем счетчик задач
+            //         this.countTasks()
+            //         // Обновляем LocalStorage
+            //         // this.updateLocalStorage()
+            //         // Обновляем данные на сервере
+            //         this.updateDataBase()
+            //         // Очищаем инпут
+            //         this.newTaskText = ''
+            //     // Если нет
+            //     }else{
+            //         // Говорим пользователю, что поле не может быть пустым
+            //         alert('Поле не может быть пустым, введите текст новой задачи!!!')
+            //     }
+            // },
 
-            // // Обновление статуса задачи
-            changeStatusTask(task){
-                // Меняем статус на противоположное значение (true/false)
-                task.checkbox = !task.checkbox
-                // Обновляем LocalStorage
-                // this.updateLocalStorage()
-                // Обновляем данные на сервере
-                this.updateDataBase()
-                // Обновляем фильтры с небольшой задержкой для удобства восприятия
-                // console.log(task.checkbox)
-                setTimeout(() => {  
-                    this.tasksFilter(this.activeNav) 
-                    // Обновляем счетчик задач
-                    this.countTasks()
-                }, 300)
-            },
+            // // Функция удаления задачи
+            // deleteTask(task){
+            //     // Находим и удаляем выбранную задачу
+            //     this.$store.state.superApp.toDo = this.$store.state.superApp.toDo.filter(item => item !== task)
+            //     // Записываем обновленный массив в переменную 'TASKS'
+            //     this.tasks = this.$store.state.superApp.toDo
+            //     // Возвращаем настройки фильтра
+            //     this.tasksFilter(this.activeNav) 
+            //     // Обновляем счетчик задач
+            //     this.countTasks()
+            //     // Обновляем LocalStorage
+            //     // this.updateLocalStorage()
+            //     // Обновляем данные на сервере
+            //     this.updateDataBase()
+            // },
+
+            // // // Обновление статуса задачи
+            // changeStatusTask(task){
+            //     // Меняем статус на противоположное значение (true/false)
+            //     task.checkbox = !task.checkbox
+            //     // Обновляем LocalStorage
+            //     // this.updateLocalStorage()
+            //     // Обновляем данные на сервере
+            //     this.updateDataBase()
+            //     // Обновляем фильтры с небольшой задержкой для удобства восприятия
+            //     // console.log(task.checkbox)
+            //     setTimeout(() => {  
+            //         this.tasksFilter(this.activeNav) 
+            //         // Обновляем счетчик задач
+            //         this.countTasks()
+            //     }, 300)
+            // },
 
             // Функция сортировки задач
             tasksFilter(nav){ 
-                // Удаляем активный класс у всего массива навигации
-                // for(let task in this.tasksNav){
-                //     this.tasksNav[task].isActive = false
-                // }
-                // Записываем массив с задачами в песочницу
-                this.tasks = this.SUPERAPP.toDo
-                // Записываем в переменную активного фильтра
-                // this.activeNav = nav
-                console.log(this.tasks)
-                // console.log(this.tasksNav)
-                // Обновляем VUEX
-                // this.$store.state.superApp.activeNav = this.activeNav
-                // Обновляем LocalStorage
-                // this.updateLocalStorage()
+                // Записываем массив с задачами в песочницу во VUEX
+                this.UPDATE_TODOSANDBOX_IN_STATE(this.SUPERAPP.toDo)
                 // Если выбрано 'Все задачи'
                 if(nav.name === 'allTasks'){
                     // Удаляем активный класс у всего массива навигации
-                    for(let task in this.tasksNav){
-                        this.tasksNav[task].isActive = false
-                    }
+                    this.deleteNavActiveClass()
                     // Присваиваем активный класс актуальной категории
                     nav.isActive = true
                     // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
@@ -231,19 +218,16 @@
                     this.isDoneTasksZero = false
                     this.isAllTasksZero = true
                 }
-                // console.log(nav.isActive)
                 // Если выбрано 'Активные задачи'
                 if(nav.name === 'activeTasks'){
                     // Удаляем активный класс у всего массива навигации
-                    for(let task in this.tasksNav){
-                        this.tasksNav[task].isActive = false
-                    }
+                    this.deleteNavActiveClass()
                     // Присваиваем активный класс актуальной категории
                     nav.isActive = true
                     // Удаляем из песочницы все кроме активных задач
-                    this.tasks = this.tasks.filter(item => item.checkbox !== true)
+                    this.FILTER_TODOSANDBOX_IN_STATE(true)
                     // Если массив-песочница пуст
-                    if(this.tasks.length === 0){
+                    if( this.SUPERAPP.toDoSandBox.length === 0){
                         // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
                         this.isActiveTasksZero = true
                         this.isDoneTasksZero = false
@@ -253,16 +237,13 @@
                 // Если выбрано 'Завершенные задачи'
                 if(nav.name === 'doneTasks'){
                     // Удаляем активный класс у всего массива навигации
-                    for(let task in this.tasksNav){
-                        this.tasksNav[task].isActive = false
-                    }
+                    this.deleteNavActiveClass()
                     // Присваиваем активный класс актуальной категории
                     nav.isActive = true
                     // Удаляем из песочницы все кроме завершенных задач
-                    this.tasks = this.tasks.filter(item => item.checkbox !== false)
-                    console.log(this.tasks)
+                    this.FILTER_TODOSANDBOX_IN_STATE(false)
                     // Если массив-песочница пуста
-                    if(this.tasks.length === 0){
+                    if( this.SUPERAPP.toDoSandBox.length === 0){
                         // Присваеваем логические значения переменным для отображения сообщений в случае отсутсвия задач
                         this.isActiveTasksZero = false
                         this.isDoneTasksZero = true
@@ -271,29 +252,29 @@
                 }
             },
 
-            // Функция подсчета задач
-            countTasks(){
-                // Перебираем массив с навигацией по задачам
-                this.tasksNav.forEach(item => {
-                    // Записываем массив с задачами в песочницу
-                    let arr = this.SUPERAPP.toDo
-                    // Если "Все задачи"
-                    if(item.name === 'allTasks'){
-                        // Записываем в переменную колличество всех задач
-                        item.count = this.SUPERAPP.toDo.length
-                    }
-                    // Если "Активные задачи"
-                    if(item.name === 'activeTasks'){
-                        // Записываем в переменную колличество активных задач
-                        item.count = arr.filter(item => item.checkbox !== true).length
-                    }
-                    // Если "Завершенные задачи"
-                    if(item.name === 'doneTasks'){
-                        // Записываем в переменную колличество завершенных задач
-                        item.count = arr.filter(item => item.checkbox !== false).length
-                    }
-                })
-            },
+            // // Функция подсчета задач
+            // countTasks(){
+            //     // Перебираем массив с навигацией по задачам
+            //     this.tasksNav.forEach(item => {
+            //         // Записываем массив с задачами в песочницу
+            //         let arr = this.SUPERAPP.toDo
+            //         // Если "Все задачи"
+            //         if(item.name === 'allTasks'){
+            //             // Записываем в переменную колличество всех задач
+            //             item.count = this.SUPERAPP.toDo.length
+            //         }
+            //         // Если "Активные задачи"
+            //         if(item.name === 'activeTasks'){
+            //             // Записываем в переменную колличество активных задач
+            //             item.count = arr.filter(item => item.checkbox !== true).length
+            //         }
+            //         // Если "Завершенные задачи"
+            //         if(item.name === 'doneTasks'){
+            //             // Записываем в переменную колличество завершенных задач
+            //             item.count = arr.filter(item => item.checkbox !== false).length
+            //         }
+            //     })
+            // },
 
             // // Функция получения данных редактироваемой задачи
             // getChangeTextTask(task){
@@ -305,32 +286,25 @@
             //     this.currentTaskId = this.$store.state.superApp.toDo.indexOf(task)
             // },
 
-            // // Функция редактирования и сохранения текста и даты задачи
-            // saveChangeTextTask(){
-            //     // Находим по ID редактируемую задачу и записываем обновленный текст
-            //     this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
-            //     // Находим по ID редактируемую задачу и записываем обновленную дату
-            //     this.$store.state.superApp.toDo[this.currentTaskId].createDate = new Date().toLocaleString()
-            //     // Обновляем LocalStorage
-            //     this.updateLocalStorage()
-            //     // Обновляем данные на сервере
-            //     this.updateDataBase()
-            //     // Закрываем форму
-            //     this.isCorrectionTextTask = false
-            // }
+            // Функция редактирования и сохранения текста и даты задачи
+            saveChangeTextTask(){
+                // Находим по ID редактируемую задачу и записываем обновленный текст
+                this.$store.state.superApp.toDo[this.currentTaskId].taskName = this.correctionTextTask
+                // Находим по ID редактируемую задачу и записываем обновленную дату
+                this.$store.state.superApp.toDo[this.currentTaskId].createDate = new Date().toLocaleString()
+                // Обновляем данные на сервере
+                this.updateDataBase()
+                // Закрываем форму
+                this.isCorrectionTextTask = false
+            },
+            deleteNavActiveClass(){
+                // Удаляем активный класс у всего массива навигации
+                for(let task in this.tasksNav){
+                    this.tasksNav[task].isActive = false
+                }
+            }
         },
         watch: {
-        },
-        // При загрузке страницы......
-        beforeMount(){
-            this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
-            this.tasks = this.SUPERAPP.toDo
-            this.countTasks()
-        },
-        // При обновлении страницы......
-        beforeUpdate(){
-            this.tasks = this.SUPERAPP.toDo
-            this.countTasks()
         }
     }
 </script>

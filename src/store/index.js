@@ -9,7 +9,8 @@ export default createStore({
                 id: '',
                 name: ''
             },
-            toDo: []
+            toDo: [],
+            toDoSandBox: []
         }
     },
     mutations: {
@@ -36,6 +37,13 @@ export default createStore({
         },
         GET_USERTODO_BY_ID_AND_SAVE_TO_STATE(state, response){
             state.superApp.toDo = response.data.toDo
+            state.superApp.toDoSandBox = state.superApp.toDo
+        },
+        UPDATE_TODOSANDBOX_IN_STATE(state, arr){
+            state.superApp.toDoSandBox = arr
+        },
+        FILTER_TODOSANDBOX_IN_STATE(state, boolean) {
+            state.superApp.toDoSandBox = state.superApp.toDoSandBox.filter(item => item.checkbox !== boolean)
         }
     },
     actions: {
@@ -69,11 +77,15 @@ export default createStore({
         },
         async GET_USERTODO_BY_ID_AND_SAVE_TO_STATE({commit}){
             let lS = JSON.parse(localStorage.getItem('superApp'))
-            // http://localhost:3000/api/auth/62616965fc481b1d3a1441a8
             const response = await axios.get(`http://localhost:3000/api/auth/${lS.user.id}`)
-            // console.log(response)
             commit('GET_USERTODO_BY_ID_AND_SAVE_TO_STATE', response)
             return response
+        },
+        UPDATE_TODOSANDBOX_IN_STATE({commit}, arr){
+            commit('UPDATE_TODOSANDBOX_IN_STATE', arr)
+        },
+        FILTER_TODOSANDBOX_IN_STATE({commit}, boolean){
+            commit('FILTER_TODOSANDBOX_IN_STATE', boolean)
         }
     },
     getters: {
