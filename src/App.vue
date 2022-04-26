@@ -12,7 +12,6 @@
         },
         computed: {
             ...mapGetters([
-                'LOGINSTATUS',
                 'SUPERAPP'
             ])
         },
@@ -26,7 +25,7 @@
             // Записываем данные из LocalStorage во VUEX
             this.SET_DATA_FROM_LOCALSTORAGE_TO_STATE()
             // // Если вход выполнен
-            if(this.LOGINSTATUS){
+            if(this.SUPERAPP.logInStatus){
                 // Записываем список задач с сервера во VUEX
                 this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
             }
