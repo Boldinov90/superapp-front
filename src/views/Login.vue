@@ -52,7 +52,6 @@
         },
         computed: {
             ...mapGetters([
-                'LOGINSTATUS',
                 'SUPERAPP'
             ])
         },
@@ -99,7 +98,7 @@
                     this.SET_TODO_TO_STATE(response)
                     // Создаем модель для localStorage, записываем данные пользователя и статус входа в систему
                     const lS = {
-                        logInStatus: this.LOGINSTATUS,
+                        logInStatus: this.SUPERAPP.logInStatus,
                         user: {
                             id: this.SUPERAPP.user.id,
                             name: this.SUPERAPP.user.name
@@ -133,12 +132,9 @@
     }
 </script>
 
-
-<style scoped>
+<style scoped lang="scss">
     .content{
         margin: 0 auto;
-    }
-    .content{
         position: absolute;
         width: 100%;
         left: 0;
@@ -150,100 +146,98 @@
         grid-template-columns: 1fr 1fr;
         justify-content: center;
         align-items: center;
-    }
-
-    .text-title{
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif;
-        letter-spacing: 2px;
-        font-weight: bold;
-        font-size: 40px;
-        text-transform: uppercase;
-    }
-    .text-subtitle{
-        margin-top: 20px;
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif;
-        letter-spacing: 1px;
-        font-size: 18px;
-        line-height: 24px;
-        padding-right: 50px;
-    }
-    .login-info{
-        color: #d6a812;
-    }
-    .content__form-wrapper{
-        padding-left: 70px;
-        padding-right: 70px;
-    }
-    .content__form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
-        border-radius: 10px;
-        padding: 20px;
-    }
-    .form-title{
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif;
-        letter-spacing: 2px;
-        font-size: 26px;
-        text-transform: uppercase;
-    }
-    .input-label{
-        margin-top: 30px;
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif;
-        align-self: flex-start;
-    }
-    .input{
-        margin-top: 7px;
-        padding: 10px;
-        border: 0;
-        border-radius: 8px;
-        align-self: flex-start;
-        width: 400px;
-        height: 30px;
-        font-family: Arial, Helvetica, sans-serif; 
-        font-size: 18px;
-        box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;  
-    }
-    .label_error{
-        color: red;
-    }
-    .input_error{
-        border: 2px solid red;
-    }
-    .btns{
-        display: flex;
-        align-self: flex-start;
-    }
-    .btn{
-        text-decoration: none;
-        margin-top: 30px;
-        border: 0;
-        border-radius: 8px;
-        background-color: #d6a812;
-        width: 150px;
-        height: 40px;
-        font-family: Arial, Helvetica, sans-serif; 
-        font-size: 16px;
-        letter-spacing: 1px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #1E1F1C;
-        margin-right: 30px;
-        transition: 0.1s;
-    }
-    .btn:hover{
-        transition: 0.2s;
-        background-color: #f8e003;
-        transform: scale(1.1);
-    }
-    .btn:active{
-        transform: scale(1);
+        .content__text{
+            .text-title{
+                color: #BFBFBF;
+                font-family: Arial, Helvetica, sans-serif;
+                letter-spacing: 2px;
+                font-weight: bold;
+                font-size: 40px;
+                text-transform: uppercase;
+            }
+            .text-subtitle{
+                margin-top: 20px;
+                color: #BFBFBF;
+                font-family: Arial, Helvetica, sans-serif;
+                letter-spacing: 1px;
+                font-size: 18px;
+                line-height: 24px;
+                padding-right: 50px;
+            }
+        }
+        .content__form-wrapper{
+            padding-left: 70px;
+            padding-right: 70px;
+            .content__form{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
+                border-radius: 10px;
+                padding: 20px;
+                .form-title{
+                    color: #BFBFBF;
+                    font-family: Arial, Helvetica, sans-serif;
+                    letter-spacing: 2px;
+                    font-size: 26px;
+                    text-transform: uppercase;
+                }
+                .input-label{
+                    margin-top: 30px;
+                    color: #BFBFBF;
+                    font-family: Arial, Helvetica, sans-serif;
+                    align-self: flex-start;
+                }
+                .input{
+                    margin-top: 7px;
+                    padding: 10px;
+                    border: 0;
+                    border-radius: 8px;
+                    align-self: flex-start;
+                    width: 400px;
+                    height: 30px;
+                    font-family: Arial, Helvetica, sans-serif; 
+                    font-size: 18px;
+                    box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;
+                }
+                .label_error{
+                    color: red;
+                }
+                .input_error{
+                    border: 2px solid red;
+                }
+                .btns{
+                    display: flex;
+                    align-self: flex-start;
+                    .btn{
+                        text-decoration: none;
+                        margin-top: 30px;
+                        border: 0;
+                        border-radius: 8px;
+                        background-color: #d6a812;
+                        width: 150px;
+                        height: 40px;
+                        font-family: Arial, Helvetica, sans-serif; 
+                        font-size: 16px;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #1E1F1C;
+                        margin-right: 30px;
+                        transition: 0.1s;
+                    }
+                    .btn:hover{
+                        transition: 0.2s;
+                        background-color: #f8e003;
+                        transform: scale(1.1);
+                    }
+                    .btn:active{
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
     }
 </style>

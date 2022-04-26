@@ -40,7 +40,7 @@
         },
         computed: {
             ...mapGetters([
-                'LOGINSTATUS'
+                'SUPERAPP'
             ])
         },
         methods: {
