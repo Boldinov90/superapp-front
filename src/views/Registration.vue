@@ -126,7 +126,6 @@
                 })
                 // Останавливаем loader
                 this.loading = false
-                // console.log(response.data)
                 // Если в ответе с сервера есть ошибка Email
                 if(response.data.email){
                     // Записываем ошибку
