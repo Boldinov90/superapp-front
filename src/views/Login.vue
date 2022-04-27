@@ -70,8 +70,11 @@
                     email: this.loginInput,
                     password: this.passwordInput
                 })
-                // После получения ответа с сервера отключаем лоадер
-                this.loading = false
+                setTimeout(() => {
+                    // После получения ответа с сервера отключаем лоадер
+                    this.loading = false
+                }, 2000)
+
                 // Если в ответе есть ошибка валидации Email
                 if(response.data.email){
                     // Записываем ошибку

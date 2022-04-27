@@ -1,6 +1,6 @@
 <template>
     <div class="content-form-wrapper">
-        <Loading v-if="loading === true" />
+        <Loading class="loader" v-if="loading === true" />
         <form class="content-form" 
             @submit.prevent="setNewUser" 
             v-else-if="!registrationDone"
@@ -124,8 +124,10 @@
                     password: this.password,
                     passwordConfirm: this.passwordСonfirm
                 })
-                // Останавливаем loader
-                this.loading = false
+                setTimeout(() => {
+                    // После получения ответа с сервера отключаем лоадер
+                    this.loading = false
+                }, 2000)
                 // Если в ответе с сервера есть ошибка Email
                 if(response.data.email){
                     // Записываем ошибку
@@ -227,6 +229,9 @@
         display: grid;
         justify-content: center;
         align-items: center;
+        .loader{
+            margin-right: 190px;
+        }
         .content-form{
             margin-top: 70px;
             display: flex;
