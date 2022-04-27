@@ -1,7 +1,7 @@
 <template>
-    <div class="content__form-wrapper">
+    <div class="content-form-wrapper">
         <Loading v-if="loading === true" />
-        <form class="content__form" 
+        <form class="content-form" 
             @submit.prevent="setNewUser" 
             v-else-if="!registrationDone"
             >
@@ -109,36 +109,55 @@
             }
         },
         methods: {
+            // Переход на страницу логина
             goToLogin(){
                 this.$router.push('/login')
             },
+            // Регистрация
             async setNewUser(){
+                // Запускаем loader
                 this.loading = true
+                // Отправляем введенную информацию на сервер
                 const response = await axios.post(`${server.BASE_URL}/auth/register`, {
                     email: this.email,
                     name: this.name,
                     password: this.password,
                     passwordConfirm: this.passwordСonfirm
                 })
+                // Останавливаем loader
                 this.loading = false
-                console.log(response.data)
+                // console.log(response.data)
+                // Если в ответе с сервера есть ошибка Email
                 if(response.data.email){
+                    // Записываем ошибку
                     this.errors.email = true
+                    // Передаем текст ошибки в label формы
                     this.emailLabel = response.data.email
                 }
+                // Если в ответе с сервера есть ошибка Name
                 if(response.data.name){
+                    // Записываем ошибку
                     this.errors.name = true
+                    // Передаем текст ошибки в label формы
                     this.nameLabel = response.data.name
                 }
+                // Если в ответе с сервера есть ошибка Password
                 if(response.data.password){
+                    // Записываем ошибку
                     this.errors.password = true
+                    // Передаем текст ошибки в label формы
                     this.passwordLabel = response.data.password
                 }
+                // Если в ответе с сервера есть ошибка PasswordConfirm
                 if(response.data.passwordConfirm){
+                    // Записываем ошибку
                     this.errors.passwordСonfirm = true
+                    // Передаем текст ошибки в label формы
                     this.passwordСonfirmLabel = response.data.passwordConfirm
                 }
+                // Если в ответе с сервера ошибок нет
                 if(response.data.user){
+                    // Фиксируем успешную регистрацию
                     this.registrationDone = true
                 }
             }
@@ -203,13 +222,13 @@
         }
     }
 
-    .content__form-wrapper{
+    .content-form-wrapper{
         width: 100%;
         height: 100vh;
         display: grid;
         justify-content: center;
         align-items: center;
-        .content__form{
+        .content-form{
             margin-top: 70px;
             display: flex;
             flex-direction: column;
