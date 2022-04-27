@@ -4,34 +4,34 @@
             <div>Анимация карточек</div>
         </div>
         <div class="content animate-cards">
-            <div class="animate-card__wrapper">
+            <div class="animate-card-wrapper">
                 <div class="animate-card" :class="[animateCardOne.isClick ? 'one' : '']" @click.prevent="flipOverCard(animateCardOne)">
-                    <div class="card animate-card__one-front">{{animateCardOne.text}}</div>
-                    <div class="card animate-card__one-back">{{animateCardOne.textIfClick}}</div>
+                    <div class="card animate-card-one-front">{{animateCardOne.text}}</div>
+                    <div class="card animate-card-one-back">{{animateCardOne.textIfClick}}</div>
                 </div>
             </div>
-            <div class="animate-card__wrapper">
+            <div class="animate-card-wrapper">
                 <div class="animate-card" :class="[animateCardTwo.isClick ? 'two' : '']" @click.prevent="flipOverCard(animateCardTwo)">
-                    <div class="card animate-card__two-front">{{animateCardTwo.text}}</div>
-                    <div class="card animate-card__two-back">{{animateCardTwo.textIfClick}}</div>
+                    <div class="card animate-card-two-front">{{animateCardTwo.text}}</div>
+                    <div class="card animate-card-two-back">{{animateCardTwo.textIfClick}}</div>
                 </div>
             </div>
-            <div class="animate-card__wrapper">
+            <div class="animate-card-wrapper">
                 <div class="animate-card" :class="[animateCardThree.isClick ? 'three' : '']" @click.prevent="flipOverCard(animateCardThree)">
-                    <div class="card animate-card__three-front">{{animateCardThree.text}}</div>
-                    <div class="card animate-card__three-back">{{animateCardThree.textIfClick}}</div>
+                    <div class="card animate-card-three-front">{{animateCardThree.text}}</div>
+                    <div class="card animate-card-three-back">{{animateCardThree.textIfClick}}</div>
                 </div>
             </div>
-            <div class="animate-card__wrapper">
+            <div class="animate-card-wrapper">
                 <div class="animate-card" :class="[animateCardFour.isClick ? 'four' : '']" @click.prevent="flipOverCard(animateCardFour)">
-                    <div class="card animate-card__four-front">{{animateCardFour.text}}</div>
-                    <div class="card animate-card__four-back">{{animateCardFour.textIfClick}}</div>
+                    <div class="card animate-card-four-front">{{animateCardFour.text}}</div>
+                    <div class="card animate-card-four-back">{{animateCardFour.textIfClick}}</div>
                 </div>
             </div>
-            <div class="animate-card__wrapper">
+            <div class="animate-card-wrapper">
                 <div class="animate-card" :class="[animateCardFive.isClick ? 'five' : '']" @click.prevent="flipOverCard(animateCardFive)">
-                    <div class="card animate-card__five-front">{{animateCardFive.text}}</div>
-                    <div class="card animate-card__five-back">{{animateCardFive.textIfClick}}</div>
+                    <div class="card animate-card-five-front">{{animateCardFive.text}}</div>
+                    <div class="card animate-card-five-back">{{animateCardFive.textIfClick}}</div>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
         justify-content: space-between;
         align-items: center;
     }
-    .animate-card__wrapper {
+    .animate-card-wrapper {
         width: 200px;
         height: 300px;
         perspective: 900px;
@@ -162,38 +162,38 @@
         box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
         cursor: pointer;
     }
-    .animate-card__one-front {
+    .animate-card-one-front {
         background-color: rgb(224, 106, 59);
     }
-    .animate-card__one-back {
+    .animate-card-one-back {
         background-color: rgb(224, 106, 59);
         transform: rotateY(180deg);
     }
-    .animate-card__two-front {
+    .animate-card-two-front {
         background-color: rgb(4, 150, 218);
     }
-    .animate-card__two-back {
+    .animate-card-two-back {
         background-color: rgb(4, 150, 218);
         transform: rotateX(180deg);
     }
-    .animate-card__three-front {
+    .animate-card-three-front {
         background-color: rgb(214, 88, 204);
     }
-    .animate-card__three-back {
+    .animate-card-three-back {
         background-color: rgb(214, 88, 204);
         transform: rotateY(180deg);
     }
-    .animate-card__four-front {
+    .animate-card-four-front {
         background-color: rgb(88, 214, 172);
     }
-    .animate-card__four-back {
+    .animate-card-four-back {
         background-color: rgb(88, 214, 172);
         transform: rotateY(180deg);
     }
-    .animate-card__five-front {
+    .animate-card-five-front {
         background-color: rgb(223, 222, 138);
     }
-    .animate-card__five-back {
+    .animate-card-five-back {
         background-color: rgb(223, 222, 138);
         transform: rotateY(180deg);
     }
