@@ -1,6 +1,6 @@
 <template>
     <div class="content container animate__animated animate__fadeIn">
-        <div class="calc__body">
+        <div class="calc-body">
             <input type="text" v-model="result" placeholder="0" class="display" disabled>
             <div class="grid">
                 <div class="num-grid">
@@ -116,7 +116,7 @@
     }
 </script>
  
-<style scoped>
+<style scoped lang="scss">
 
     .content{
         width: 100%;
@@ -124,110 +124,110 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    .calc__body{
-        margin-top: 20px;
-        width: 500px;
-        height: 500px;
-        background-color: rgb(49, 49, 49);
-        box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .display{
-        border: none;
-        background-color: rgb(49, 49, 49);
-        text-align: end;
-        padding-right: 20px;
-        color: #D7D7D7;
-        width: 90%;
-        font-size: 90px;
-        margin-top: 20px;
-    }
-    input::placeholder {
-        color:#D7D7D7;
-    }
-    .grid{
-        display: grid;
-        grid-template-columns: 3fr 2fr;
-        align-items: center;
-        height: 100%;
-        width: 90%;
-    }
-    .num-grid{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        justify-content: space-between;
-    }
-    .num-item{
-        justify-self: center;
-        border: none;
-        border-radius: 50%;
-        background-color: #5D5D5B;
-        color: #D7D7D7;
-        height: 70px;
-        width: 70px;
-        font-size: 30px;
-        margin-bottom: 15px;
-        transition: 0.2s;
-    }
-    .num-item:nth-last-child(2){
-        grid-column-start: 1;
-        grid-column-end: 3;
-        width: 90%;
-        border-radius: 35px;
-    }
-    .num-item:hover{
-        background-color: #7a7a78;
-        transition: 0.2s;
-    }
-    .num-item:active{
-        background-color: #9b9b99;
-        transform: scale(0.95);
-    }
-    .op-grid{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-    }
-    .op-item{
-        justify-self: center;
-        border: none;
-        border-radius: 50%;
-        background-color: #ffa024;
-        color: rgb(49, 49, 49);
-        height: 70px;
-        width: 70px;
-        font-size: 30px;
-        margin-bottom: 15px;
-        transition: 0.2s;
-    }
-    .op-item:nth-last-child(2){
-        grid-row-start: 3;
-        grid-row-end: 5;
-        height: 90%;
-        border-radius: 35px;
-    }
-    .op-top{
-        background-color: #eb5d0b;
-        color: #D7D7D7;
-    }
+        .calc-body{
+            margin-top: 20px;
+            width: 500px;
+            height: 500px;
+            background-color: rgb(49, 49, 49);
+            box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.603);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .display{
+                border: none;
+                background-color: rgb(49, 49, 49);
+                text-align: end;
+                padding-right: 20px;
+                color: #D7D7D7;
+                width: 90%;
+                font-size: 90px;
+                margin-top: 20px;
+            }
+            input::placeholder {
+                color:#D7D7D7;
+            }
+            .grid{
+                display: grid;
+                grid-template-columns: 3fr 2fr;
+                align-items: center;
+                height: 100%;
+                width: 90%;
+                .num-grid{
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    justify-content: space-between;
+                    .num-item{
+                        justify-self: center;
+                        border: none;
+                        border-radius: 50%;
+                        background-color: #5D5D5B;
+                        color: #D7D7D7;
+                        height: 70px;
+                        width: 70px;
+                        font-size: 30px;
+                        margin-bottom: 15px;
+                        transition: 0.2s;
+                    }
+                    .num-item:nth-last-child(2){
+                        grid-column-start: 1;
+                        grid-column-end: 3;
+                        width: 90%;
+                        border-radius: 35px;
+                    }
+                    .num-item:hover{
+                        background-color: #7a7a78;
+                        transition: 0.2s;
+                    }
+                    .num-item:active{
+                        background-color: #9b9b99;
+                        transform: scale(0.95);
+                    }
+                }
+                .op-grid{
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr 1fr 1fr;
+                    .op-item{
+                        justify-self: center;
+                        border: none;
+                        border-radius: 50%;
+                        background-color: #ffa024;
+                        color: rgb(49, 49, 49);
+                        height: 70px;
+                        width: 70px;
+                        font-size: 30px;
+                        margin-bottom: 15px;
+                        transition: 0.2s;
+                    }
+                    .op-item:nth-last-child(2){
+                        grid-row-start: 3;
+                        grid-row-end: 5;
+                        height: 90%;
+                        border-radius: 35px;
+                    }
+                    .op-top{
+                        background-color: #eb5d0b;
+                        color: #D7D7D7;
+                    }
 
-    .op-item:hover{
-        background-color: #f7b660;
-        transition: 0.2s;
-    }
-    .op-item:active{
-        background-color: #f8d2a1;
-        transform: scale(0.95);
-    }
-    .op-top:hover{
-        background-color: #e76f2a;
-    }
-    .op-top:active{
-        background-color: #e68046;
-        transform: scale(0.95);
+                    .op-item:hover{
+                        background-color: #f7b660;
+                        transition: 0.2s;
+                    }
+                    .op-item:active{
+                        background-color: #f8d2a1;
+                        transform: scale(0.95);
+                    }
+                    .op-top:hover{
+                        background-color: #e76f2a;
+                    }
+                    .op-top:active{
+                        background-color: #e68046;
+                        transform: scale(0.95);
+                    }
+                }
+            }
+        }
     }
 </style>
