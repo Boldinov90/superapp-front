@@ -172,92 +172,94 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+    @mixin btn {
+        .btn{
+            text-decoration: none;
+            margin-top: 30px;
+            border: 0;
+            border-radius: 8px;
+            background-color: #d6a812;
+            width: 150px;
+            height: 40px;
+            font-family: Arial, Helvetica, sans-serif; 
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1E1F1C;
+            margin-right: 30px;
+        }
+        .btn:active{
+            transform: scale(1);
+        }
+        .btn:hover{
+            transition: 0.2s;
+            background-color: #f8e003;
+            transform: scale(1.1);
+        }
+    }
+
     .content__form-wrapper{
         width: 100%;
         height: 100vh;
         display: grid;
         justify-content: center;
         align-items: center;
-    }
-    .content__form{
-        margin-top: 70px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
-        border-radius: 10px;
-        padding: 20px;
-    }
-    .form-title{
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif;
-        letter-spacing: 2px;
-        font-size: 26px;
-        text-transform: uppercase;
-    }
-    .input-label{
-        margin-top: 30px;
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    .input{
-        margin-top: 7px;
-        padding: 10px;
-        border: 0;
-        border-radius: 8px;
-        width: 400px;
-        height: 30px;
-        font-family: Arial, Helvetica, sans-serif; 
-        font-size: 18px;
-        box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;  
-    }
-    .label_error{
-        color: red;
-    }
-    .input_error{
-        border: 2px solid red;
-    }
-    .btns{
-        display: flex;
-    }
-    .btn{
-        text-decoration: none;
-        margin-top: 30px;
-        border: 0;
-        border-radius: 8px;
-        background-color: #d6a812;
-        width: 150px;
-        height: 40px;
-        font-family: Arial, Helvetica, sans-serif; 
-        font-size: 16px;
-        letter-spacing: 1px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #1E1F1C;
-        margin-right: 30px;
-    }
-    .btn:hover{
-        transition: 0.2s;
-        background-color: #f8e003;
-        transform: scale(1.1);
-    }
-    .btn:active{
-        transform: scale(1);
-    }
-    .response{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .response h1 {
-        color: #BFBFBF;
-        font-family: Arial, Helvetica, sans-serif; 
-        line-height: 1.6;
+        .content__form{
+            margin-top: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
+            border-radius: 10px;
+            padding: 20px;
+            .form-title{
+                color: #BFBFBF;
+                font-family: Arial, Helvetica, sans-serif;
+                letter-spacing: 2px;
+                font-size: 26px;
+                text-transform: uppercase;
+            }
+            .input-label{
+                margin-top: 30px;
+                color: #BFBFBF;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .input{
+                margin-top: 7px;
+                padding: 10px;
+                border: 0;
+                border-radius: 8px;
+                width: 400px;
+                height: 30px;
+                font-family: Arial, Helvetica, sans-serif; 
+                font-size: 18px;
+                box-shadow: 0px 0px 22px 1px rgba(0, 0, 0, 0.67) inset;
+            }
+            .label_error{
+                color: red;
+            }
+            .input_error{
+                border: 2px solid red;
+            }
+            .btns{
+                display: flex;
+                @include btn;
+            }
+        }
+        .response{
+            @include btn;
+        }
+        .response h1 {
+            color: #BFBFBF;
+            font-family: Arial, Helvetica, sans-serif; 
+            line-height: 1.6;
+        }
     }
 </style>>
 

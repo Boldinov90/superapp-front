@@ -28,6 +28,9 @@
             if(this.SUPERAPP.logInStatus){
                 // Записываем список задач с сервера во VUEX
                 this.GET_USERTODO_BY_ID_AND_SAVE_TO_STATE()
+            }else{
+                // Отображаем страницу логина
+                this.$router.push('/login')
             }
         }
     }
@@ -42,7 +45,6 @@
         -webkit-user-select: none;
         user-select: none;
     }
-
     .navbar{
         position: fixed;
         left: 0;
@@ -51,7 +53,6 @@
         background-color: #1E1F1C;
         z-index: 99;
     }
-    
     body{
         background-color: #1E1F1C;
         margin: 0;

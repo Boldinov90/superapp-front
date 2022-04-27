@@ -1,27 +1,27 @@
 <template>
     <div class="header">
-        <div class="header__wrapper container">
-            <div class="header__logo">
+        <div class="header-wrapper container">
+            <div class="header-logo">
                 SUPERAPP
             </div>
-            <div class="header__nav" v-if="SUPERAPP.logInStatus">
-                <ul class="header__navItemsList">
-                    <li class="header__navItem">
+            <div class="header-nav" v-if="SUPERAPP.logInStatus">
+                <ul class="header-navItemsList">
+                    <li class="header-navItem">
                         <router-link class="navItem" to="/">Главная</router-link>
                     </li>
-                    <li class="header__navItem">
+                    <li class="header-navItem">
                         <router-link class="navItem" to="/todo">ToDo</router-link>
                     </li>
-                    <li class="header__navItem">
+                    <li class="header-navItem">
                         <router-link class="navItem" to="/css-animate">CSS Анимации</router-link>
                     </li>
-                    <li class="header__navItem">
+                    <li class="header-navItem">
                         <router-link class="navItem" to="/calculate">Калькулятор</router-link>
                     </li>
-                    <li class="header__navItem">
+                    <li class="header-navItem">
                         <router-link class="navItem btn" to="/login" @click.prevent="logOut">Выйти</router-link>
                     </li>
-                    <div class="header__navItem">
+                    <div class="header-navItem">
                         <div class="navItem user">{{SUPERAPP.user.name}}</div>
                     </div>
                 </ul>
@@ -68,26 +68,26 @@
         justify-content: center;
         padding-left: 10px;
         padding-right: 10px;
-        .header__wrapper{
+        .header-wrapper{
             width: 100%;
             display: flex;
             justify-content: space-around;
-            .header__logo{
+            .header-logo{
                 align-self: center;
                 color: #d6a812;
                 font-family: Arial, Helvetica, sans-serif;
                 letter-spacing: 6px;
                 font-size: 29px;
             }
-            .header__nav{
+            .header-nav{
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                .header__navItemsList{
+                .header-navItemsList{
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    .header__navItem{
+                    .header-navItem{
                         list-style-type: none;
                         .navItem{
                             text-decoration: none;

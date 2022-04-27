@@ -1,6 +1,6 @@
 <template>
     <section class="content container">
-        <div class="content__text">
+        <div class="content-text">
             <div class="text-title">
                 Welcome to my test application and make yourself at home. 
             </div>
@@ -8,10 +8,10 @@
                 Войдите под своей учетной записью, если таковая отсутствует - зарегистрируйтесь. При регистрации используйте любой выдуманный электронный адрес. Данный функционал создан для ознакомления и демонстрации навыка и не нацелен на безопасность. В качестве базы данных задействован MongoDB.
             </div>
         </div>
-        <div class="content__form-wrapper">
+        <div class="content-form-wrapper">
             <!-- Компонент лоадера -->
             <Loading v-if="loading === true" />
-            <form class="content__form" @submit.prevent="logIn" v-else>
+            <form class="content-form" @submit.prevent="logIn" v-else>
                 <div class="form-title">
                     Авторизация
                 </div>
@@ -146,7 +146,7 @@
         grid-template-columns: 1fr 1fr;
         justify-content: center;
         align-items: center;
-        .content__text{
+        .content-text{
             .text-title{
                 color: #BFBFBF;
                 font-family: Arial, Helvetica, sans-serif;
@@ -165,10 +165,10 @@
                 padding-right: 50px;
             }
         }
-        .content__form-wrapper{
+        .content-form-wrapper{
             padding-left: 70px;
             padding-right: 70px;
-            .content__form{
+            .content-form{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
