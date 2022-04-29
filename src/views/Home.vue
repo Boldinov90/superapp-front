@@ -6,7 +6,7 @@
       <p
          class="welcome-subtitle animate__animated animate__fadeIn animate__delay-1s"
       >
-         Эй, {{ $store.state.superApp.user.name }}, добро пожаловать в мое
+         Эй, {{ SUPERAPP.user.name }}, добро пожаловать в мое
          первое приложение, не имеющее абсолютно никакой смысловой нагрузки,
          созданное исключительно ради практики, демонстрации навыков и на потеху
          опытным разработчикам.
@@ -29,7 +29,11 @@
 
 <script>
 import Animate from 'animate.css'
+import { mapGetters } from 'vuex'
 export default {
+   computed: {
+      ...mapGetters(['SUPERAPP']),
+   },
    components: {
       Animate,
    },
@@ -43,7 +47,7 @@ export default {
    align-items: center;
    font-family: Arial, Helvetica, sans-serif;
    .welcome {
-      margin-top: 120px;
+      margin-top: 200px;
       flex-direction: column;
       .welcome-title {
          color: blanchedalmond;

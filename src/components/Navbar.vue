@@ -74,7 +74,6 @@ export default {
    padding-left: 10px;
    padding-right: 10px;
    .header-wrapper {
-      width: 100%;
       display: flex;
       justify-content: space-around;
       .header-logo {
@@ -132,6 +131,39 @@ export default {
                .user {
                   font-size: 14px;
                   border-bottom: 1px solid rgb(192, 192, 192);
+               }
+            }
+         }
+      }
+   }
+}
+@media (max-width: 1060px) {
+   .header {
+      margin-top: 50px;
+      .header-wrapper {
+         display: grid;
+         grid-template-columns: 1fr;
+         .header-logo {
+            text-align: center;
+         }
+         .header-nav {
+            margin-top: 20px;
+         }
+      }
+   }
+}
+@media (max-width: 860px) {
+   .header {
+      margin-top: 50px;
+      .header-wrapper {
+         .header-nav {
+            margin-top: 20px;
+            .header-navItemsList {
+               padding-left: 0;
+               .header-navItem{
+                  .navItem{
+                     font-size: 14px;
+                  }
                }
             }
          }
