@@ -73,24 +73,40 @@ export default {
    justify-content: center;
    padding-left: 10px;
    padding-right: 10px;
+   @media (max-width: 1060px) {
+      margin-top: 50px;
+   }
    .header-wrapper {
       display: flex;
       justify-content: space-around;
+      @media (max-width: 1060px) {
+         display: grid;
+         grid-template-columns: 1fr;
+      }
       .header-logo {
          align-self: center;
          color: #d6a812;
          font-family: Arial, Helvetica, sans-serif;
          letter-spacing: 6px;
          font-size: 29px;
+         @media (max-width: 1060px) {
+            text-align: center;
+         }
       }
       .header-nav {
          display: flex;
          justify-content: center;
          align-items: center;
+         @media (max-width: 1060px) {
+            margin-top: 20px;
+         }
          .header-navItemsList {
             display: flex;
             justify-content: center;
             align-items: center;
+            @media (max-width: 860px) {
+               padding-left: 0;
+            }
             .header-navItem {
                list-style-type: none;
                .navItem {
@@ -100,6 +116,9 @@ export default {
                   font-family: Arial, Helvetica, sans-serif;
                   font-size: 18px;
                   letter-spacing: 2px;
+                  @media (max-width: 860px) {
+                     font-size: 14px;
+                  }
                }
                .active {
                   transition: 0.5s;
@@ -131,39 +150,6 @@ export default {
                .user {
                   font-size: 14px;
                   border-bottom: 1px solid rgb(192, 192, 192);
-               }
-            }
-         }
-      }
-   }
-}
-@media (max-width: 1060px) {
-   .header {
-      margin-top: 50px;
-      .header-wrapper {
-         display: grid;
-         grid-template-columns: 1fr;
-         .header-logo {
-            text-align: center;
-         }
-         .header-nav {
-            margin-top: 20px;
-         }
-      }
-   }
-}
-@media (max-width: 860px) {
-   .header {
-      margin-top: 50px;
-      .header-wrapper {
-         .header-nav {
-            margin-top: 20px;
-            .header-navItemsList {
-               padding-left: 0;
-               .header-navItem{
-                  .navItem{
-                     font-size: 14px;
-                  }
                }
             }
          }

@@ -15,7 +15,7 @@
          class="welcome-subtitle animate__animated animate__fadeIn animate__delay-2s"
       >
          Работа написана на VUEJS с помощью VUE CLI. Применены инструменты:
-         VUEX, VUE-Router, Firebase, Axios, Animate.css и Google естественно,
+         VUEX, VUE-Router, MongoDB, Axios, Animate.css и Google естественно,
          куда же без него &#128521;
       </p>
       <div
@@ -58,6 +58,9 @@ export default {
          letter-spacing: 1.1px;
          color: rgba(163, 159, 151, 0.863);
          --animate-delay: 0.5s;
+         @media (max-width: 860px) {
+            width: 700px;
+         }
       }
       .travolta-and-google-img-wrapper {
          margin-top: 70px;

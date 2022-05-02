@@ -170,7 +170,17 @@ export default {
    grid-template-columns: 1fr 1fr;
    justify-content: center;
    align-items: center;
+   @media (max-width: 1025px) {
+      display: grid;
+      grid-template-columns: 1fr;
+   }
    .content-text {
+      @media (max-width: 1025px) {
+         margin-top: 100px;
+      }
+      @media (max-width: 769px) {
+         margin-top: 20px;
+      }
       .text-title {
          padding: 15px;
          color: #bfbfbf;
@@ -179,6 +189,17 @@ export default {
          font-weight: bold;
          font-size: 40px;
          text-transform: uppercase;
+         @media (max-width: 1200px) {
+            font-size: 30px;
+         }
+         @media (max-width: 1025px) {
+            font-size: 46px;
+            text-align: center;
+         }
+         @media (max-width: 769px) {
+            font-size: 44px;
+            padding: 15px;
+         }
       }
       .text-subtitle {
          padding: 15px;
@@ -189,11 +210,44 @@ export default {
          font-size: 18px;
          line-height: 24px;
          padding-right: 50px;
+         @media (max-width: 1200px) {
+            font-size: 14px;
+            line-height: 20px;
+         }
+         @media (max-width: 1025px) {
+            padding-left: 80px;
+            padding-right: 80px;
+            font-size: 24px;
+            line-height: 30px;
+            text-align: center;
+         }
+         @media (max-width: 769px) {
+            margin-left: 30px;
+            margin-right: 30px;
+            padding-left: 40px;
+            padding-right: 40px;
+            font-size: 18px;
+            line-height: 24px;
+         }
       }
    }
    .content-form-wrapper {
       padding-left: 15px;
       padding-right: 15px;
+      @media (max-width: 1025px) {
+         display: grid;
+         align-self: flex-start;
+         padding-left: 200px;
+         padding-right: 200px;
+      }
+      @media (max-width: 769px) {
+         margin-left: 150px;
+         margin-right: 150px;
+         display: grid;
+         align-self: flex-start;
+         padding-left: 0px;
+         padding-right: 0px;
+      }
       .content-form {
          display: grid;
          grid-template-columns: 1fr;
@@ -201,6 +255,13 @@ export default {
          box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.603);
          border-radius: 10px;
          padding: 30px;
+         @media (max-width: 1025px) {
+            margin-top: 100px;
+         }
+         @media (max-width: 769px) {
+            margin-top: 10px;
+            padding: 10px;
+         }
          .form-title {
             color: #bfbfbf;
             font-family: Arial, Helvetica, sans-serif;
@@ -263,79 +324,6 @@ export default {
             .btn:active {
                transform: scale(1);
             }
-         }
-      }
-   }
-}
-@media (max-width: 1200px) {
-   .content {
-      .content-text {
-         .text-title {
-            font-size: 30px;
-         }
-         .text-subtitle {
-            font-size: 14px;
-            line-height: 20px;
-         }
-      }
-   }
-}
-@media (max-width: 1025px) {
-   .content {
-      display: grid;
-      grid-template-columns: 1fr;
-      .content-text {
-         margin-top: 100px;
-         .text-title {
-            font-size: 46px;
-            text-align: center;
-         }
-         .text-subtitle {
-            padding-left: 80px;
-            padding-right: 80px;
-            font-size: 24px;
-            line-height: 30px;
-            text-align: center;
-         }
-      }
-      .content-form-wrapper {
-         display: grid;
-         align-self: flex-start;
-         padding-left: 200px;
-         padding-right: 200px;
-         .content-form {
-            margin-top: 100px;
-         }
-      }
-   }
-}
-@media (max-width: 769px) {
-   .content {
-      .content-text {
-         margin-top: 20px;
-         .text-title {
-            font-size: 44px;
-            padding: 15px;
-         }
-         .text-subtitle {
-            margin-left: 30px;
-            margin-right: 30px;
-            padding-left: 40px;
-            padding-right: 40px;
-            font-size: 18px;
-            line-height: 24px;
-         }
-      }
-      .content-form-wrapper {
-         margin-left: 150px;
-         margin-right: 150px;
-         display: grid;
-         align-self: flex-start;
-         padding-left: 0px;
-         padding-right: 0px;
-         .content-form {
-            margin-top: 10px;
-            padding: 10px;
          }
       }
    }
