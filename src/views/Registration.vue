@@ -56,16 +56,16 @@
          <label
             for="passwordСonfirm"
             class="input-label"
-            :class="{ label_error: errors.passwordСonfirm }"
-            >{{ passwordСonfirmLabel }}
+            :class="{ label_error: errors.passwordConfirm }"
+            >{{ passwordConfirmLabel }}
          </label>
          <input
             id="passwordСonfirm"
-            v-model="passwordСonfirm"
+            v-model="passwordConfirm"
             type="password"
             class="input"
             placeholder="Введите пароль ещё раз"
-            :class="{ input_error: errors.passwordСonfirm }"
+            :class="{ input_error: errors.passwordConfirm }"
          />
          <div class="btns">
             <button class="btn">ОТПРАВИТЬ</button>
@@ -98,14 +98,14 @@ export default {
          nameLabel: 'Имя*',
          password: '',
          passwordLabel: 'Пароль*',
-         passwordСonfirm: '',
-         passwordСonfirmLabel: 'Подтверждение пароля*',
+         passwordConfirm: '',
+         passwordConfirmLabel: 'Подтверждение пароля*',
          registrationDone: false,
          errors: {
             email: null,
             name: null,
             password: null,
-            passwordСonfirm: null,
+            passwordConfirm: null,
          },
          loading: false,
       }
@@ -131,9 +131,9 @@ export default {
       },
       passwordСonfirm() {
          // Отменяем ошибку
-         this.errors.passwordСonfirm = null
+         this.errors.passwordConfirm = null
          // Возвращаем лейбл в исходное состояние
-         this.passwordСonfirmLabel = 'Подтверждение пароля*'
+         this.passwordConfirmLabel = 'Подтверждение пароля*'
       },
    },
    methods: {
@@ -150,7 +150,7 @@ export default {
             email: this.email,
             name: this.name,
             password: this.password,
-            passwordConfirm: this.passwordСonfirm,
+            passwordConfirm: this.passwordConfirm,
          })
          setTimeout(() => {
             // После получения ответа с сервера отключаем лоадер
@@ -180,9 +180,9 @@ export default {
          // Если в ответе с сервера есть ошибка PasswordConfirm
          if (response.data.passwordConfirm) {
             // Записываем ошибку
-            this.errors.passwordСonfirm = true
+            this.errors.passwordConfirm = true
             // Передаем текст ошибки в label формы
-            this.passwordСonfirmLabel = response.data.passwordConfirm
+            this.passwordConfirmLabel = response.data.passwordConfirm
          }
          // Если в ответе с сервера ошибок нет
          if (response.data.user) {

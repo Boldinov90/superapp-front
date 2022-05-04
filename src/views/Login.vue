@@ -20,7 +20,7 @@
             <label
                for="login"
                class="input-label"
-               :class="{ label_error: errors.login == true }"
+               :class="{ label_error: errors.login === true }"
                >{{ loginInputLabel }}</label
             >
             <input
@@ -28,13 +28,13 @@
                v-model="loginInput"
                type="email"
                class="input"
-               :class="{ input_error: errors.login == true }"
+               :class="{ input_error: errors.login === true }"
                placeholder="Введите Ваш Email"
             />
             <label
                for="password"
                class="input-label"
-               :class="{ label_error: errors.password == true }"
+               :class="{ label_error: errors.password === true }"
                >{{ passwordInputLabel }}</label
             >
             <input
@@ -42,7 +42,7 @@
                v-model="passwordInput"
                type="password"
                class="input"
-               :class="{ input_error: errors.password == true }"
+               :class="{ input_error: errors.password === true }"
                placeholder="Введите Ваш пароль"
             />
             <div class="btns">
@@ -165,7 +165,6 @@ export default {
 .content {
    margin: 0 auto;
    height: 700px;
-   margin-top: 100px;
    display: grid;
    grid-template-columns: 1fr 1fr;
    justify-content: center;
@@ -173,6 +172,10 @@ export default {
    @media (max-width: 1025px) {
       display: grid;
       grid-template-columns: 1fr;
+      margin-top: 100px;
+   }
+   @media (max-width: 770px) {
+      margin-top: 130px;
    }
    .content-text {
       @media (max-width: 1025px) {
