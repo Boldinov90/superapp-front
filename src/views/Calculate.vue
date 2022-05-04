@@ -30,7 +30,7 @@
                   v-html="op.value"
                />
                <button class="op-item" @click="calculate()">=</button>
-         </div>
+            </div>
          </div>
       </div>
    </div>
