@@ -95,20 +95,20 @@
       </div>
       <div class="content animation-two">
          <div
-            class="ball-jump"
             v-for="ball of animationTwo.sumBalls"
             :key="ball"
-         ></div>
+            class="ball-jump"
+         />
       </div>
       <div class="title">
          <div>Анимация Loader 2</div>
       </div>
       <div class="content animation-three">
          <div
-            class="ball-pendulum"
             v-for="ball of animationThree.sumBalls"
             :key="ball"
-         ></div>
+            class="ball-pendulum"
+         />
       </div>
    </div>
 </template>
@@ -166,7 +166,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 * {
    font-family: Arial, Helvetica, sans-serif;
 }

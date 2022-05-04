@@ -4,11 +4,11 @@
          <div class="tasks-sidebar">
             <ul class="tasks-nav">
                <li
-                  class="tasks-nav-item"
                   v-for="taskNav of tasksNav"
                   :key="taskNav"
-                  @click="tasksFilter(taskNav)"
+                  class="tasks-nav-item"
                   :class="[taskNav.isActive ? 'tasks_nav_item_active' : '']"
+                  @click="tasksFilter(taskNav)"
                >
                   {{ taskNav.value }}
                   <div
@@ -29,8 +29,8 @@
          <div class="add-task-form">
             <div class="add-task-form-input">
                <input
-                  type="text"
                   v-model="newTaskText"
+                  type="text"
                   placeholder="Введите текст новой задачи"
                   @keyup.enter="addTask"
                />
@@ -40,18 +40,18 @@
             </button>
          </div>
          <div
-            class="task-item-wrapper"
             v-if="SUPERAPP.toDoSandBox.length !== 0"
+            class="task-item-wrapper"
          >
             <div
-               class="task-item"
                v-for="task of SUPERAPP.toDoSandBox"
                :key="task"
+               class="task-item"
             >
                <input
+                  v-model="task.checkbox"
                   class="task-item-check_box"
                   type="checkbox"
-                  v-model="task.checkbox"
                   :checked="task.checkbox"
                   @click="changeStatusTask(task)"
                />
@@ -81,17 +81,17 @@
                </button>
                <transition name="fade" class="transition">
                   <div
-                     class="change-task-text-overlay"
                      v-if="isCorrectionTextTask"
+                     class="change-task-text-overlay"
                      name="fade"
                   >
                      <div class="change-task-text-body container">
                         <textarea
+                           v-model="correctionTextTask"
                            cols="30"
                            rows="10"
-                           v-model="correctionTextTask"
                            @keyup.enter="saveChangeTextTask"
-                        ></textarea>
+                        />
                         <div class="btns-change-task-text">
                            <button
                               class="btn"
@@ -111,7 +111,7 @@
                </transition>
             </div>
          </div>
-         <div class="task-item-if-null" v-else>
+         <div v-else class="task-item-if-null">
             <div v-if="!SUPERAPP.toDo.length">
                Список задач пуст. Добавьте новую задачу!
             </div>

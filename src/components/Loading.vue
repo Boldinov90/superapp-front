@@ -1,10 +1,10 @@
 <template>
    <div class="wrapper">
       <div
-         class="ball-pendulum"
          v-for="ball of animationThree.sumBalls"
          :key="ball"
-      ></div>
+         class="ball-pendulum"
+      />
    </div>
 </template>
 

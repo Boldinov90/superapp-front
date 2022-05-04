@@ -15,7 +15,7 @@
       <div class="content-form-wrapper">
          <!-- Компонент лоадера -->
          <Loading v-if="loading === true" />
-         <form class="content-form" @submit.prevent="logIn" v-else>
+         <form v-else class="content-form" @submit.prevent="logIn">
             <div class="form-title">Авторизация</div>
             <label
                for="login"
@@ -24,9 +24,9 @@
                >{{ loginInputLabel }}</label
             >
             <input
+               id="login"
                v-model="loginInput"
                type="email"
-               id="login"
                class="input"
                :class="{ input_error: errors.login == true }"
                placeholder="Введите Ваш Email"
@@ -38,9 +38,9 @@
                >{{ passwordInputLabel }}</label
             >
             <input
+               id="password"
                v-model="passwordInput"
                type="password"
-               id="password"
                class="input"
                :class="{ input_error: errors.password == true }"
                placeholder="Введите Ваш пароль"

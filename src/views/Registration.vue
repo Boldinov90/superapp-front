@@ -1,10 +1,10 @@
 <template>
    <div class="content-form-wrapper">
-      <Loading class="loader" v-if="loading === true" />
+      <Loading v-if="loading === true" class="loader" />
       <form
+         v-else-if="!registrationDone"
          class="content-form"
          @submit.prevent="setNewUser"
-         v-else-if="!registrationDone"
       >
          <div class="form-title">Регистрация</div>
          <!-- ============Email ========================== -->
@@ -15,9 +15,9 @@
             >{{ emailLabel }}
          </label>
          <input
+            id="email"
             v-model="email"
             type="email"
-            id="email"
             class="input"
             placeholder="Укажите Ваш Email"
             :class="{ input_error: errors.email }"
@@ -30,9 +30,9 @@
             >{{ nameLabel }}
          </label>
          <input
+            id="name"
             v-model="name"
             type="text"
-            id="name"
             class="input"
             placeholder="Укажите Ваше имя"
             :class="{ input_error: errors.name }"
@@ -45,9 +45,9 @@
             >{{ passwordLabel }}
          </label>
          <input
+            id="password"
             v-model="password"
             type="password"
-            id="password"
             class="input"
             placeholder="Введите Ваш пароль"
             :class="{ input_error: errors.password }"
@@ -60,9 +60,9 @@
             >{{ passwordСonfirmLabel }}
          </label>
          <input
+            id="passwordСonfirm"
             v-model="passwordСonfirm"
             type="password"
-            id="passwordСonfirm"
             class="input"
             placeholder="Введите пароль ещё раз"
             :class="{ input_error: errors.passwordСonfirm }"
@@ -72,7 +72,7 @@
             <button class="btn" @click.prevent="goToLogin">ОТМЕНА</button>
          </div>
       </form>
-      <div class="response" v-else>
+      <div v-else class="response">
          <h1>
             Регистрация успешно выполнена. <br />Перейти на страницу
             авторизации.
@@ -109,6 +109,32 @@ export default {
          },
          loading: false,
       }
+   },
+   watch: {
+      email() {
+         // Отменяем ошибку
+         this.errors.email = null
+         // Возвращаем лейбл в исходное состояние
+         this.emailLabel = 'Логин*'
+      },
+      name() {
+         // Отменяем ошибку
+         this.errors.name = null
+         // Возвращаем лейбл в исходное состояние
+         this.nameLabel = 'Имя*'
+      },
+      password() {
+         // Отменяем ошибку
+         this.errors.password = null
+         // Возвращаем лейбл в исходное состояние
+         this.passwordLabel = 'Пароль*'
+      },
+      passwordСonfirm() {
+         // Отменяем ошибку
+         this.errors.passwordСonfirm = null
+         // Возвращаем лейбл в исходное состояние
+         this.passwordСonfirmLabel = 'Подтверждение пароля*'
+      },
    },
    methods: {
       // Переход на страницу логина
@@ -163,32 +189,6 @@ export default {
             // Фиксируем успешную регистрацию
             this.registrationDone = true
          }
-      },
-   },
-   watch: {
-      email() {
-         // Отменяем ошибку
-         this.errors.email = null
-         // Возвращаем лейбл в исходное состояние
-         this.emailLabel = 'Логин*'
-      },
-      name() {
-         // Отменяем ошибку
-         this.errors.name = null
-         // Возвращаем лейбл в исходное состояние
-         this.nameLabel = 'Имя*'
-      },
-      password() {
-         // Отменяем ошибку
-         this.errors.password = null
-         // Возвращаем лейбл в исходное состояние
-         this.passwordLabel = 'Пароль*'
-      },
-      passwordСonfirm() {
-         // Отменяем ошибку
-         this.errors.passwordСonfirm = null
-         // Возвращаем лейбл в исходное состояние
-         this.passwordСonfirmLabel = 'Подтверждение пароля*'
       },
    },
 }

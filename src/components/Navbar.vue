@@ -2,34 +2,37 @@
    <div class="header">
       <div class="header-wrapper container">
          <div class="header-logo">SUPERAPP</div>
-         <div class="header-nav" v-if="SUPERAPP.logInStatus">
+         <div v-if="SUPERAPP.logInStatus" class="header-nav">
             <ul class="header-navItemsList">
                <li class="header-navItem">
-                  <router-link class="navItem" to="/">Главная</router-link>
+                  <router-link class="navItem" to="/"> Главная </router-link>
                </li>
                <li class="header-navItem">
-                  <router-link class="navItem" to="/todo">ToDo</router-link>
+                  <router-link class="navItem" to="/todo"> ToDo </router-link>
                </li>
                <li class="header-navItem">
-                  <router-link class="navItem" to="/css-animate"
-                     >CSS Анимации</router-link
-                  >
+                  <router-link class="navItem" to="/css-animate">
+                     CSS Анимации
+                  </router-link>
                </li>
                <li class="header-navItem">
-                  <router-link class="navItem" to="/calculate"
-                     >Калькулятор</router-link
-                  >
+                  <router-link class="navItem" to="/calculate">
+                     Калькулятор
+                  </router-link>
                </li>
                <li class="header-navItem">
                   <router-link
                      class="navItem btn"
                      to="/login"
                      @click.prevent="logOut"
-                     >Выйти</router-link
                   >
+                     Выйти
+                  </router-link>
                </li>
                <div class="header-navItem">
-                  <div class="navItem user">{{ SUPERAPP.user.name }}</div>
+                  <div class="navItem user">
+                     {{ SUPERAPP.user.name }}
+                  </div>
                </div>
             </ul>
          </div>

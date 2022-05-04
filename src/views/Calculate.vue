@@ -2,8 +2,8 @@
    <div class="content container animate__animated animate__fadeIn">
       <div class="calc-body">
          <input
-            type="text"
             v-model="result"
+            type="text"
             placeholder="0"
             class="display"
             disabled
@@ -11,25 +11,25 @@
          <div class="grid">
             <div class="num-grid">
                <button
-                  @click="inputNum(num)"
-                  class="num-item"
                   v-for="num of numbers"
                   :key="num"
+                  class="num-item"
+                  @click="inputNum(num)"
                >
                   {{ num }}
                </button>
             </div>
             <div class="op-grid">
-               <button @click="reset()" class="op-item op-top">C</button>
-               <button @click="percent()" class="op-item op-top">%</button>
+               <button class="op-item op-top" @click="reset()">C</button>
+               <button class="op-item op-top" @click="percent()">%</button>
                <button
-                  @click="getOp(op.name)"
-                  class="op-item"
                   v-for="op of operations"
                   :key="op"
+                  class="op-item"
+                  @click="getOp(op.name)"
                   v-html="op.value"
-               ></button>
-               <button @click="calculate()" class="op-item">=</button>
+               />
+               <button class="op-item" @click="calculate()">=</button>
             </div>
          </div>
       </div>
