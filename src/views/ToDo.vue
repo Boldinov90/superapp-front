@@ -124,13 +124,10 @@
 
 <script>
 import axios from 'axios'
-// import Animate from 'animate.css'
+import 'animate.css'
 import { server } from '../utils/helper'
 import { mapActions, mapGetters } from 'vuex'
 export default {
-   // components: {
-   //    Animate,
-   // },
    data() {
       return {
          isCorrectionTextTask: false,

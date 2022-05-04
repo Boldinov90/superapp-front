@@ -31,14 +31,11 @@
 </template>
 
 <script>
-import Animate from 'animate.css'
+import 'animate.css'
 import { mapGetters } from 'vuex'
 export default {
    computed: {
       ...mapGetters(['SUPERAPP']),
-   },
-   components: {
-      Animate,
    },
 }
 </script>

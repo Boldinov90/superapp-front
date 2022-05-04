@@ -37,11 +37,8 @@
 </template>
 
 <script>
-import Animate from 'animate.css'
+import 'animate.css'
 export default {
-   components: {
-      Animate,
-   },
    data() {
       return {
          result: '',
