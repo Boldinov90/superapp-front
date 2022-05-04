@@ -6,16 +6,19 @@
       <p
          class="welcome-subtitle animate__animated animate__fadeIn animate__delay-1s"
       >
-         Эй, {{ SUPERAPP.user.name }}, добро пожаловать в мое
-         первое приложение, не имеющее абсолютно никакой смысловой нагрузки,
-         созданное исключительно ради практики, демонстрации навыков и на потеху
-         опытным разработчикам.
+         Эй, {{ SUPERAPP.user.name }}, добро пожаловать в мое первое приложение,
+         не имеющее абсолютно никакой смысловой нагрузки, созданное
+         исключительно ради практики, демонстрации навыков и на потеху опытным
+         разработчикам.
       </p>
       <p
          class="welcome-subtitle animate__animated animate__fadeIn animate__delay-2s"
       >
-         Работа написана на VUEJS с помощью VUE CLI. Применены инструменты:
-         VUEX, VUE-Router, MongoDB, Axios, Animate.css и Google естественно,
+         Back End написан на Nest.js с помощью NEST/CLI. Применены инструменты:
+         typeScript, jwt, passport, mongoose/typegoose, bcrypt, validator. В
+         качестве BD используется MongoDB.<br />
+         Front End написан на Vue.js с помощью VUE/CLI. Применены инструменты:
+         VUEX, VUE-Router, SASS/SCSS, Axios, Animate.css и Google естественно,
          куда же без него &#128521;
       </p>
       <div
@@ -47,8 +50,11 @@ export default {
    align-items: center;
    font-family: Arial, Helvetica, sans-serif;
    .welcome {
-      margin-top: 200px;
+      margin-top: 100px;
       flex-direction: column;
+      @media (max-width: 1060px) {
+         margin-top: 150px;
+      }
       .welcome-title {
          color: blanchedalmond;
       }
@@ -63,7 +69,7 @@ export default {
          }
       }
       .travolta-and-google-img-wrapper {
-         margin-top: 70px;
+         margin-top: 30px;
          --animate-delay: 0.5s;
          .google-logo {
             width: 400px;

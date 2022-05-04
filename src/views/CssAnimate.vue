@@ -165,7 +165,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 * {
    font-family: Arial, Helvetica, sans-serif;
 }
@@ -173,6 +174,9 @@ export default {
    width: 100%;
    display: flex;
    justify-content: center;
+   @media (max-width: 1060px) {
+      margin-top: 60px;
+   }
 }
 .title div {
    color: #bfbfbf;
@@ -182,18 +186,20 @@ export default {
    font-weight: 100;
 }
 .content {
-   display: flex;
-   justify-content: center;
    position: relative;
 }
 .animate-cards {
    margin-top: 50px;
-   height: 400px;
    width: 100%;
-   justify-content: space-between;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
    align-items: center;
 }
 .animate-card-wrapper {
+   margin-top: 50px;
+   margin-left: 20px;
+   margin-right: 20px;
    width: 200px;
    height: 300px;
    perspective: 900px;
@@ -365,6 +371,12 @@ export default {
 }
 .animation-one {
    height: 600px;
+   display: flex;
+   justify-content: center;
+   @media (max-width: 940px) {
+      height: 400px;
+      margin-top: 70px;
+   }
 }
 .background-image-grass {
    position: absolute;
@@ -410,6 +422,8 @@ export default {
    margin-top: 100px;
    height: 400px;
    align-items: center;
+   display: flex;
+   justify-content: center;
 }
 .ball-jump {
    margin-right: 10px;
@@ -487,6 +501,8 @@ export default {
    border-radius: 50%;
    align-items: center;
    margin-left: -350px;
+   display: flex;
+   justify-content: center;
 }
 .ball-pendulum {
    background-color: rgb(236, 0, 0);

@@ -73,8 +73,9 @@ export default {
    justify-content: center;
    padding-left: 10px;
    padding-right: 10px;
+   background-color: #1e1f1c;
    @media (max-width: 1060px) {
-      margin-top: 50px;
+      height: 150px;
    }
    .header-wrapper {
       display: flex;
@@ -90,7 +91,9 @@ export default {
          letter-spacing: 6px;
          font-size: 29px;
          @media (max-width: 1060px) {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
          }
       }
       .header-nav {
@@ -98,7 +101,6 @@ export default {
          justify-content: center;
          align-items: center;
          @media (max-width: 1060px) {
-            margin-top: 20px;
          }
          .header-navItemsList {
             display: flex;
