@@ -178,7 +178,7 @@ export default {
             this.passwordLabel = response.data.password
          }
          // Если в ответе с сервера есть ошибка PasswordConfirm
-         if (response.data.passwordСonfirm) {
+         if (response.data.passwordConfirm) {
             // Записываем ошибку
             this.errors.passwordConfirm = true
             // Передаем текст ошибки в label формы
